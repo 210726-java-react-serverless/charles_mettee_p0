@@ -1,6 +1,7 @@
 package com.revature.p0.util;
 
 import com.revature.p0.screens.LoginScreen;
+import com.revature.p0.screens.RegisterScreen;
 import com.revature.p0.screens.WelcomeScreen;
 
 import java.io.BufferedReader;
