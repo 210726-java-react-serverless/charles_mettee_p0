@@ -23,5 +23,9 @@ public class ScreenRouter {
         }
     }
 
+    public Screen getCurrentScreen(){
+        return currentScreen;
+    }
+
 
 }

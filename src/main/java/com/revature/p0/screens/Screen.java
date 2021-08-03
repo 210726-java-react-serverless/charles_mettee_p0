@@ -23,7 +23,7 @@ public abstract class Screen {
 
     public String getRoute() {
         return route;
-
+    }
 
     public abstract void render();
 
