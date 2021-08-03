@@ -2,13 +2,13 @@ package com.revature.p0.users;
 
 public abstract class User {
 
-    private int id;
-    private String userType;
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private String email;
+    protected int id;
+    protected String userType;
+    protected String firstName;
+    protected String lastName;
+    protected String username;
+    protected String password;
+    protected String email;
 
     public User(String userType, String firstName, String lastName, String username, String password, String email) {
         this.userType = userType;
