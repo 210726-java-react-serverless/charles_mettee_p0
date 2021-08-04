@@ -12,5 +12,7 @@ public class LoginScreen extends Screen{
     @Override
     public void render() {
         //#TODO implement rendering for LoginScreen
+        System.out.println("Login Screen");
+        System.exit(0);
     }
 }

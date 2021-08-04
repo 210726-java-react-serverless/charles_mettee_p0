@@ -19,9 +19,9 @@ public class AppState {
         this.router = new ScreenRouter();
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
-        router.addScreen(new WelcomeScreen(consoleReader, router));
         router.addScreen(new LoginScreen(consoleReader, router));
         router.addScreen(new RegisterScreen(consoleReader, router));
+        router.addScreen(new WelcomeScreen(consoleReader, router));
         //#TODO add new screens to router as needed
 
     }
@@ -36,8 +36,6 @@ public class AppState {
                 e.printStackTrace(); //#TODO
             }
         }
-
     }
-
 
 }

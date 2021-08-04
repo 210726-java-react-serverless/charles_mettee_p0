@@ -12,5 +12,7 @@ public class RegisterScreen extends Screen {
     @Override
     public void render() {
         //#TODO implement rendering for RegisterScreen
+        System.out.println("Register Screen");
+        System.exit(0);
     }
 }

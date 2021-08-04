@@ -11,6 +11,7 @@ public class ScreenRouter {
 
     public ScreenRouter addScreen(Screen screen){
         screenSet.add(screen);
+        currentScreen = screen;
         return this;
     }
 
