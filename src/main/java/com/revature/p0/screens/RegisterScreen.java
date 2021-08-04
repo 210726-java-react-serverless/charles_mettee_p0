@@ -10,9 +10,10 @@ public class RegisterScreen extends Screen {
     }
 
     @Override
-    public void render() {
+    public void render() throws Exception {
         //#TODO implement rendering for RegisterScreen
-        System.out.println("Register Screen");
+        System.out.println("\nPlease enter your registration information below\n");
+
         System.exit(0);
     }
 }
