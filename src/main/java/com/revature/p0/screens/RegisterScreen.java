@@ -7,7 +7,7 @@ public class RegisterScreen extends Screen {
 
 
     public RegisterScreen(BufferedReader consoleReader, ScreenRouter router) {
-        super("RegisterScreen", "/register", consoleReader, router);
+        super("RegisterScreen", "/Register", consoleReader, router);
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 public class LoginScreen extends Screen{
 
     public LoginScreen(BufferedReader consoleReader, ScreenRouter router) {
-        super("LoginScreen", "/login", consoleReader, router);
+        super("LoginScreen", "/Login", consoleReader, router);
     }
 
     @Override
@@ -19,6 +19,7 @@ public class LoginScreen extends Screen{
 
         System.out.print("Password\n> ");
         String password = consoleReader.readLine();
+
 
         System.exit(0);
     }
