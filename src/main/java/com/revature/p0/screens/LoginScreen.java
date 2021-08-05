@@ -10,9 +10,16 @@ public class LoginScreen extends Screen{
     }
 
     @Override
-    public void render() {
+    public void render() throws Exception {
         //#TODO implement rendering for LoginScreen
-        System.out.println("\nPlease enter your Login Information\n");
+        System.out.println("\nWelcome to the login screen! Please enter your login information below\n");
+
+        System.out.print("Username\n> ");
+        String username = consoleReader.readLine();
+
+        System.out.print("Password\n> ");
+        String password = consoleReader.readLine();
+
         System.exit(0);
     }
 }

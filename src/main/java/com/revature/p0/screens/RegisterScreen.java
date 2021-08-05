@@ -17,6 +17,9 @@ public class RegisterScreen extends Screen {
         //#TODO implement persistence of registration information to database
         System.out.println("\nWelcome to the registration screen! Please enter your registration information below\n");
 
+        System.out.print("Student or Faculty\n> ");
+        String userType = consoleReader.readLine();
+
         System.out.print("First name\n> ");
         String firstName = consoleReader.readLine();
 
@@ -28,8 +31,6 @@ public class RegisterScreen extends Screen {
 
         System.out.print("Password\n> ");
         String password = consoleReader.readLine();
-
-        System.out.println("Registration complete");
 
         router.navigate("/Welcome"); //return to the welcome screen upon registration completion.
 
