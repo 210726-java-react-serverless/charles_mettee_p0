@@ -14,11 +14,11 @@ public class WelcomeScreen extends Screen {
     public void render() throws Exception {
 
         System.out.println("Welcome to my console-based student management application!\n");
-        String menu = "(1) Login\n(2) Register\n(3) Exit Application\n>";
+        String menu = "(1) Login\n(2) Register\n(3) Exit Application\n> ";
 
         System.out.print(menu);
 
-        String userSelection;
+        String userSelection = "";
 
         do {
             userSelection = consoleReader.readLine();

@@ -1,0 +1,35 @@
+[
+  {
+    "type": "Student",
+    "firstName": "Charles",
+    "lastName": "Mettee",
+    "email": "charles.mettee@revature.net",
+    "username": "cmettee",
+    "password": "password"
+  },
+  {
+    "type": "Student",
+    "firstName": "David",
+    "lastName": "Smith",
+    "email": "dsmith@gmail.net",
+    "username": "dsmith",
+    "password": "password123"
+  },
+  {
+    "type": "Faculty",
+    "firstName": "Wezley",
+    "lastName": "Singleton",
+    "email": "wezley.singleton@revature.com",
+    "username": "wsingleton",
+    "password": "revature"
+  },
+  {
+    "type": "Faculty",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "jdoe@revature.com",
+    "username": "jdoe",
+    "password": "revature123"
+  }
+]
+
