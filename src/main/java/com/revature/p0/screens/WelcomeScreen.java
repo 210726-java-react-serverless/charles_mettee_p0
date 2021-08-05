@@ -36,7 +36,7 @@ public class WelcomeScreen extends Screen {
                     System.out.print("You provided an invalid value, please try again.\n");
                     System.out.print(menu);
             }
-        } while (!(userSelection.equals("1") || !(!userSelection.equals("2"))));
+        } while (!(userSelection.equals("1") && !(userSelection.equals("2"))));;
 
     }
 
