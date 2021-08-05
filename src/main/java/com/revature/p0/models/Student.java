@@ -1,4 +1,4 @@
-package com.revature.p0.users;
+package com.revature.p0.models;
 
 public class Student extends User {
 
