@@ -13,15 +13,12 @@ public class WelcomeScreen extends Screen {
     @Override
     public void render() throws Exception {
 
-        System.out.println("Welcome to my console-based student management application!\n");
-        String menu = "(1) Login\n(2) Register\n(3) Exit Application\n> ";
+        System.out.println("\nWelcome to my console-based student management application!\n");
+        String menu = "\t(1) Login\n\t(2) Register\n\t(3) Exit Application\n\t> ";
 
         System.out.print(menu);
 
-        String userSelection = "";
-
-        do {
-            userSelection = consoleReader.readLine();
+        String userSelection = consoleReader.readLine();
             switch (userSelection) {
                 case "1":
                     router.navigate("/Login");
@@ -34,9 +31,7 @@ public class WelcomeScreen extends Screen {
                     System.exit(0);
                 default:
                     System.out.print("You provided an invalid value, please try again.\n");
-                    System.out.print(menu);
             }
-        } while (!(userSelection.equals("1") && !(userSelection.equals("2"))));;
 
     }
 
