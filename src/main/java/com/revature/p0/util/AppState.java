@@ -10,9 +10,8 @@ import java.nio.Buffer;
 
 public class AppState {
 
-    private boolean appRunning;
+    private static boolean appRunning;
     private final ScreenRouter router;
-
 
     public AppState() {
         this.appRunning = true;
@@ -22,6 +21,7 @@ public class AppState {
         router.addScreen(new LoginScreen(consoleReader, router));
         router.addScreen(new RegisterScreen(consoleReader, router));
         router.addScreen(new WelcomeScreen(consoleReader, router));
+
         //#TODO add new screens to router as needed
 
     }
@@ -36,6 +36,11 @@ public class AppState {
                 e.printStackTrace(); //#TODO
             }
         }
+    }
+
+    public static void shutdown() {
+        appRunning = false;
+        MongoClientFactory.getInstance().cleanUp();
     }
 
 }
