@@ -3,20 +3,19 @@ package com.revature.p0.models;
 public class Course {
 
     protected int id;
-    protected int studentLimit;
-    protected int creditHours;
+    protected String courseSubject;
     protected String courseCode;
     protected String courseTitle;
-    protected String courseSubject;
+    protected int studentLimit;
+    protected int creditHours;
     protected String registrationWindow; //#TODO define registration window
 
-    public Course(int studentLimit, int creditHours, String courseCode, String courseTitle, String courseSubject, String registrationWindow) {
-        this.studentLimit = studentLimit;
-        this.creditHours = creditHours;
+    public Course(String courseSubject, String courseCode, String courseTitle, int studentLimit, int creditHours) {
+        this.courseSubject = courseSubject;
         this.courseCode = courseCode;
         this.courseTitle = courseTitle;
-        this.courseSubject = courseSubject;
-        this.registrationWindow = registrationWindow;
+        this.studentLimit = studentLimit;
+        this.creditHours = creditHours;
     }
 
     public int getStudentLimit() {
