@@ -6,17 +6,17 @@ public abstract class User {
     protected String userType;
     protected String firstName;
     protected String lastName;
+    protected String email;
     protected String username;
     protected String password;
-    protected String email;
 
     public User(String userType, String firstName, String lastName, String username, String password, String email) {
         this.userType = userType;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.username = username;
         this.password = password;
-        this.email = email;
     }
 
     public String getFirstName() {
