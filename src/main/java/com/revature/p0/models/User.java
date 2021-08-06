@@ -1,14 +1,16 @@
 package com.revature.p0.models;
 
+import java.time.LocalDateTime;
+
 public abstract class User {
 
-    protected int id;
-    protected String userType;
-    protected String firstName;
-    protected String lastName;
-    protected String email;
-    protected String username;
-    protected String password;
+    private String id;
+    private String userType;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String username;
+    private String password;
 
     public User(String userType, String firstName, String lastName, String username, String password, String email) {
         this.userType = userType;
@@ -17,6 +19,19 @@ public abstract class User {
         this.email = email;
         this.username = username;
         this.password = password;
+    }
+
+    public User(String id, String userType, String firstName, String lastName, String username, String password, String email) {
+        this(userType, firstName, lastName, email, username, password);
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {
