@@ -5,7 +5,9 @@ import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import com.revature.p0.util.exceptions.DataSourceException;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Collections;
 import java.util.List;
@@ -38,11 +40,13 @@ public class MongoClientFactory {
 
             this.mongoClient = MongoClients.create(settings);
 
-        } catch (Exception e) {
-            //#TODO logging
-            System.out.println("An unexpected error occured" + e);
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("Unable to load database properties file.", fnfe);
+        } catch(Exception e){
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
         }
-
     }
 
     public void cleanUp(){
