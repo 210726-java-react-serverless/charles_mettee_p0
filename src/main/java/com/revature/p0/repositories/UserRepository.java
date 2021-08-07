@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.revature.p0.models.FacultyMember;
 import com.revature.p0.models.Student;
 import com.revature.p0.models.User;
 import com.revature.p0.util.MongoClientFactory;
@@ -26,9 +27,20 @@ public class UserRepository implements CrudRepository<User> {
             }
 
             ObjectMapper mapper = new ObjectMapper();
-            User authUser = mapper.readValue(authUserDoc.toJson(), User.class);
-            authUser.setId(authUserDoc.get("_id").toString());
-            return authUser;
+
+            if(authUserDoc.getString("type").equals("Student")){
+                System.out.println(authUserDoc.getString("type"));
+                Student authUser = mapper.readValue(authUserDoc.toJson(), Student.class);
+                authUser.setId(authUserDoc.get("_id").toString());
+                return authUser;
+            } else if(authUserDoc.getString("type").equals("Faculty")){
+                System.out.println(authUserDoc.getString("type"));
+                FacultyMember authUser = mapper.readValue(authUserDoc.toJson(), FacultyMember.class);
+                authUser.setId(authUserDoc.get("_id").toString());
+                return authUser;
+            }
+
+            return null;
 
         } catch (JsonMappingException jme) {
             jme.printStackTrace(); // TODO log this to a file

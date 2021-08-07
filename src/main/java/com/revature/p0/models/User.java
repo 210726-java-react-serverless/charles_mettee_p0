@@ -1,7 +1,10 @@
 package com.revature.p0.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class User {
 
     private String id;
@@ -11,6 +14,8 @@ public abstract class User {
     private String email;
     private String username;
     private String password;
+
+    public User(){};
 
     public User(String userType, String firstName, String lastName, String username, String password, String email) {
         this.userType = userType;
