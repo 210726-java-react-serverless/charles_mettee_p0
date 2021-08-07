@@ -1,13 +1,20 @@
 package com.revature.p0.screens;
 
+import com.revature.p0.services.UserService;
 import com.revature.p0.util.ScreenRouter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedReader;
 
 public class RegisterScreen extends Screen {
 
+    private final Logger logger = LogManager.getLogger(RegisterScreen.class);
+    private final UserService userService;
 
-    public RegisterScreen(BufferedReader consoleReader, ScreenRouter router) {
+    public RegisterScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService) {
         super("RegisterScreen", "/Register", consoleReader, router);
+        this.userService = userService;
     }
 
     @Override
