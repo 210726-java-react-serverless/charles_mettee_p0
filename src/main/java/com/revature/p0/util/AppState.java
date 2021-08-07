@@ -1,8 +1,10 @@
 package com.revature.p0.util;
 
+import com.revature.p0.repositories.UserRepository;
 import com.revature.p0.screens.LoginScreen;
 import com.revature.p0.screens.RegisterScreen;
 import com.revature.p0.screens.WelcomeScreen;
+import com.revature.p0.services.UserService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,8 +20,12 @@ public class AppState {
         this.router = new ScreenRouter();
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
-        router.addScreen(new LoginScreen(consoleReader, router));
-        router.addScreen(new RegisterScreen(consoleReader, router));
+        UserSession userSession = new UserSession();
+        UserRepository userRepo = new UserRepository();
+        UserService userService = new UserService(userRepo, userSession);
+
+        router.addScreen(new LoginScreen(consoleReader, router, userService));
+        router.addScreen(new RegisterScreen(consoleReader, router, userService));
         router.addScreen(new WelcomeScreen(consoleReader, router));
 
         //#TODO add new screens to router as needed
