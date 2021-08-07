@@ -29,12 +29,10 @@ public class UserRepository implements CrudRepository<User> {
             ObjectMapper mapper = new ObjectMapper();
 
             if(authUserDoc.getString("type").equals("Student")){
-                System.out.println(authUserDoc.getString("type"));
                 Student authUser = mapper.readValue(authUserDoc.toJson(), Student.class);
                 authUser.setId(authUserDoc.get("_id").toString());
                 return authUser;
             } else if(authUserDoc.getString("type").equals("Faculty")){
-                System.out.println(authUserDoc.getString("type"));
                 FacultyMember authUser = mapper.readValue(authUserDoc.toJson(), FacultyMember.class);
                 authUser.setId(authUserDoc.get("_id").toString());
                 return authUser;
