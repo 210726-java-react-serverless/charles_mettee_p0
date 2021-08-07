@@ -17,6 +17,29 @@ public class FacultyDashboardScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-        //#TODO implement FacultyDashboardScreen rendering
+
+        System.out.println("\nWelcome to the Faculty Dashboard Screen, "
+                            + userService.getSession().getCurrentUser().getFirstName() + "!");
+
+        System.out.print("\n\t(1) Add Course\n\t(2) Edit Course\n\t(3) Remove Course\n\t(4) Logout\n\t> ");
+
+        String userSelection = consoleReader.readLine();
+        switch (userSelection) {
+            case "1":
+                router.navigate("/FacultyAddClass");
+                break;
+            case "2":
+                router.navigate("/FacultyEditClass");
+                break;
+            case "3":
+                router.navigate("/FacultyRemoveClass");
+                break;
+            case "4":
+                System.out.println("Closing Application...");
+                System.exit(0); //#TODO handle logging out
+            default:
+                System.out.print("You provided an invalid value, please try again.\n");
+        }
+
     }
 }
