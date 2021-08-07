@@ -19,20 +19,19 @@ public class WelcomeScreen extends Screen {
         System.out.print(menu);
 
         String userSelection = consoleReader.readLine();
-            switch (userSelection) {
-                case "1":
-                    router.navigate("/Login");
-                    break;
-                case "2":
-                    router.navigate("/Register");
-                    break;
-                case "3":
-                    System.out.println("Closing Application...");
-                    System.exit(0);
-                default:
-                    System.out.print("You provided an invalid value, please try again.\n");
-            }
-
+        switch (userSelection) {
+            case "1":
+                router.navigate("/Login");
+                break;
+            case "2":
+                router.navigate("/Register");
+                break;
+            case "3":
+                System.out.println("Closing Application...");
+                System.exit(0);
+            default:
+                System.out.print("You provided an invalid value, please try again.\n");
+        }
     }
 
 }
