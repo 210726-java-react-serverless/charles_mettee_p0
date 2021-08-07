@@ -17,6 +17,39 @@ public class StudentDashboardScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-        //#TODO implement StudentDashboardScreen rendering
+
+        System.out.println("Welcome to the Student Dashboard Screen, "
+                + userService.getSession().getCurrentUser().getFirstName() + "!");
+
+        System.out.print("\n\t(1) View Available Courses" +
+                        "\n\t(2) View My Registered Courses" +
+                        "\n\t(3) Register for Course" +
+                        "\n\t(4) Cancel Registered Course" +
+                        "\n\t(5) Logout\n\t> ");
+
+        String userSelection = consoleReader.readLine();
+        switch (userSelection) {
+            case "1":
+                router.navigate("/StudentViewAvailableClasses");
+                break;
+            case "2":
+                router.navigate("/StudentViewRegisteredClasses");
+                break;
+            case "3":
+                router.navigate("/StudentRegisterForClass");
+                break;
+            case "4":
+                router.navigate("/StudentCancelRegisteredClass");
+                break;
+            case "5":
+                System.out.println("Closing Application...");
+                System.exit(0); //#TODO handle logging out
+            default:
+                System.out.print("You provided an invalid value, please try again.\n");
+        }
+
+
+
+
     }
 }
