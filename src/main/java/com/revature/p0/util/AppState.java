@@ -4,6 +4,8 @@ import com.revature.p0.repositories.UserRepository;
 import com.revature.p0.screens.LoginScreen;
 import com.revature.p0.screens.RegisterScreen;
 import com.revature.p0.screens.WelcomeScreen;
+import com.revature.p0.screens.facultyscreens.FacultyDashboardScreen;
+import com.revature.p0.screens.studentscreens.StudentDashboardScreen;
 import com.revature.p0.services.UserService;
 
 import java.io.BufferedReader;
@@ -26,6 +28,8 @@ public class AppState {
 
         router.addScreen(new LoginScreen(consoleReader, router, userService));
         router.addScreen(new RegisterScreen(consoleReader, router, userService));
+        router.addScreen(new StudentDashboardScreen(consoleReader, router, userService));
+        router.addScreen(new FacultyDashboardScreen(consoleReader, router, userService));
         router.addScreen(new WelcomeScreen(consoleReader, router));
 
         //#TODO add new screens to router as needed
