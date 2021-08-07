@@ -45,6 +45,7 @@ public class UserService {
             throw new InvalidRequestException("Invalid user credentials provided!");
         }
 
+        //#TODO determine whether user is a student or faculty member
         User authUser = userRepo.findUserByCredentials(username, password);
 
         if (authUser == null) {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.revature.p0.models.Student;
 import com.revature.p0.models.User;
 import com.revature.p0.util.MongoClientFactory;
 import com.revature.p0.util.exceptions.DataSourceException;
@@ -15,7 +16,7 @@ public class UserRepository implements CrudRepository<User> {
     public User findUserByCredentials(String username, String password) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase bookstoreDatabase = mongoClient.getDatabase("bookstore");
+            MongoDatabase bookstoreDatabase = mongoClient.getDatabase("projectdatabase");
             MongoCollection<Document> usersCollection = bookstoreDatabase.getCollection("users");
             Document queryDoc = new Document("username", username).append("password", password);
             Document authUserDoc = usersCollection.find(queryDoc).first();
