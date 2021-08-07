@@ -1,5 +1,7 @@
 package com.revature.p0.screens;
 
+import com.revature.p0.models.FacultyMember;
+import com.revature.p0.models.Student;
 import com.revature.p0.models.User;
 import com.revature.p0.services.UserService;
 import com.revature.p0.util.ScreenRouter;
@@ -29,7 +31,13 @@ public class LoginScreen extends Screen{
         try {
             User authUser = userService.login(username, password);
             System.out.println("Login successful!");
-            router.navigate("/dashboard"); //#TODO navigate to proper dashboard
+
+            if(authUser instanceof Student) {
+                router.navigate("/StudentDashboard");
+            } else if(authUser instanceof FacultyMember){
+                router.navigate("/FacultyDashboard");
+            }
+
         } catch (AuthenticationException e) {
             System.out.println("No user found with provided credentials!");
             System.out.println("Navigating back to welcome screen...");
