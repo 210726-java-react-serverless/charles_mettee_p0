@@ -51,7 +51,7 @@ public class UserRepository implements CrudRepository<User> {
 
 
     @Override
-    public User findById(int id) {
+    public User findById(String id) {
         return null;
     }
 
@@ -86,7 +86,7 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     @Override
-    public boolean deleteById(int id) {
+    public boolean deleteById(String id) {
         return false;
     }
 
