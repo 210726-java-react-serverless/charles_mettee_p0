@@ -2,13 +2,13 @@ package com.revature.p0.models;
 
 public class Course {
 
-    protected int id;
-    protected String courseSubject;
-    protected String courseCode;
-    protected String courseTitle;
-    protected int studentLimit;
-    protected int creditHours;
-    protected String registrationWindow; //#TODO define registration window
+    private String id;
+    private String courseSubject;
+    private String courseCode;
+    private String courseTitle;
+    private int studentLimit;
+    private int creditHours;
+    private String registrationWindow; //#TODO define registration window
 
     public Course(String courseSubject, String courseCode, String courseTitle, int studentLimit, int creditHours) {
         this.courseSubject = courseSubject;
