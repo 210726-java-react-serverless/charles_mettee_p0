@@ -10,6 +10,7 @@ import com.revature.p0.screens.facultyscreens.FacultyDashboardScreen;
 import com.revature.p0.screens.facultyscreens.FacultyEditClassScreen;
 import com.revature.p0.screens.facultyscreens.FacultyViewClassesScreen;
 import com.revature.p0.screens.studentscreens.StudentDashboardScreen;
+import com.revature.p0.screens.studentscreens.StudentViewAvailableClassesScreen;
 import com.revature.p0.services.CourseService;
 import com.revature.p0.services.UserService;
 import java.io.BufferedReader;
@@ -34,6 +35,7 @@ public class AppState {
         router.addScreen(new LoginScreen(consoleReader, router, userService));
         router.addScreen(new RegisterScreen(consoleReader, router, userService));
         router.addScreen(new StudentDashboardScreen(consoleReader, router, userService));
+        router.addScreen(new StudentViewAvailableClassesScreen(consoleReader, router, userService));
         router.addScreen(new FacultyDashboardScreen(consoleReader, router, userService));
         router.addScreen(new FacultyViewClassesScreen(consoleReader, router, userService));
         router.addScreen(new FacultyAddClassScreen(consoleReader, router, courseService));
