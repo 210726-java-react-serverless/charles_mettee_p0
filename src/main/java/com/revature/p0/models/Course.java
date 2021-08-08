@@ -11,16 +11,17 @@ public class Course {
     private String courseTitle;
     private int studentLimit;
     private int creditHours;
-    private String registrationWindow; //#TODO define registration window
+    private boolean windowOpen;
 
     public Course(){}
 
-    public Course(String courseSubject, String courseCode, String courseTitle, int studentLimit, int creditHours) {
+    public Course(String courseSubject, String courseCode, String courseTitle, int studentLimit, int creditHours, boolean windowOpen) {
         this.courseSubject = courseSubject;
         this.courseCode = courseCode;
         this.courseTitle = courseTitle;
         this.studentLimit = studentLimit;
         this.creditHours = creditHours;
+        this.windowOpen = windowOpen;
     }
 
     public String getId() {
@@ -71,11 +72,11 @@ public class Course {
         this.courseSubject = courseSubject;
     }
 
-    public String getRegistrationWindow() {
-        return registrationWindow;
+    public boolean isWindowOpen() {
+        return windowOpen;
     }
 
-    public void setRegistrationWindow(String registrationWindow) {
-        this.registrationWindow = registrationWindow;
+    public void setWindowOpen(boolean windowOpen) {
+        this.windowOpen = windowOpen;
     }
 }
