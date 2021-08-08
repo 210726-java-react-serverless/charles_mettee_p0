@@ -22,9 +22,7 @@ public class RegisterScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-        //#TODO implement rendering for RegisterScreen
         //#TODO validate registration information
-        //#TODO implement persistence of registration information to database
         System.out.println("\nWelcome to the registration screen! Please enter your registration information.\n");
 
         System.out.print("\tStudent or Faculty\n\t> ");
@@ -53,7 +51,7 @@ public class RegisterScreen extends Screen {
         try {
             userService.register(newUser);
             logger.info("User successfully registered!");
-            router.navigate("/dashboard");
+            router.navigate("/welcome");
         } catch (Exception e) {
             logger.error(e.getMessage());
             logger.debug("User not registered!");
