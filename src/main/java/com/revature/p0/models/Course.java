@@ -1,5 +1,8 @@
 package com.revature.p0.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Course {
 
     private String id;
@@ -9,6 +12,8 @@ public class Course {
     private int studentLimit;
     private int creditHours;
     private String registrationWindow; //#TODO define registration window
+
+    public Course(){}
 
     public Course(String courseSubject, String courseCode, String courseTitle, int studentLimit, int creditHours) {
         this.courseSubject = courseSubject;
