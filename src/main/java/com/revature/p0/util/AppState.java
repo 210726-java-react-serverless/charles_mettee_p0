@@ -7,6 +7,7 @@ import com.revature.p0.screens.RegisterScreen;
 import com.revature.p0.screens.WelcomeScreen;
 import com.revature.p0.screens.facultyscreens.FacultyAddClassScreen;
 import com.revature.p0.screens.facultyscreens.FacultyDashboardScreen;
+import com.revature.p0.screens.facultyscreens.FacultyEditClassScreen;
 import com.revature.p0.screens.facultyscreens.FacultyViewClassesScreen;
 import com.revature.p0.screens.studentscreens.StudentDashboardScreen;
 import com.revature.p0.services.CourseService;
@@ -36,6 +37,7 @@ public class AppState {
         router.addScreen(new FacultyDashboardScreen(consoleReader, router, userService));
         router.addScreen(new FacultyViewClassesScreen(consoleReader, router, userService));
         router.addScreen(new FacultyAddClassScreen(consoleReader, router, courseService));
+        router.addScreen(new FacultyEditClassScreen(consoleReader, router, courseService));
         router.addScreen(new WelcomeScreen(consoleReader, router));
 
         //#TODO add new screens to router as needed

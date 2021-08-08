@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 
 public class FacultyAddClassScreen extends Screen {
-    //#TODO implement FacultyAddClassScreen functionality
 
     private final Logger logger = LogManager.getLogger(FacultyAddClassScreen.class);
     private final CourseService courseService;
@@ -23,7 +22,6 @@ public class FacultyAddClassScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-        //#TODO implement FacultyAddClassScreen rendering
         System.out.println("\nWelcome to the Add Course screen! Please enter the course details below.\n");
 
         System.out.print("\tCourse Subject\n\t> ");
