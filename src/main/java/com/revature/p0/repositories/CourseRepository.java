@@ -25,7 +25,6 @@ public class CourseRepository implements CrudRepository<Course> {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
             MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
             MongoCollection<Document> courseCollection = projectDb.getCollection("courses");
-           // Document queryDoc = new Document("courseTitle", "2");
             List<Document> allDocuments = courseCollection.find().into(new ArrayList<>());
 
             ObjectMapper mapper = new ObjectMapper();
