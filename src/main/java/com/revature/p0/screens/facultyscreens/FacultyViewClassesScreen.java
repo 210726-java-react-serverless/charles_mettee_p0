@@ -24,7 +24,6 @@ public class FacultyViewClassesScreen extends Screen {
         List<Course> allCourses = cr.getAllCourses();
 
         for(Course c : allCourses){
-
             System.out.println("\t\t" + c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
         }
 
