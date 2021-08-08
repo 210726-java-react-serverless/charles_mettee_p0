@@ -43,6 +43,34 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    public List<Course> getAvailableCourses(){
+        List<Course> courseList = new ArrayList<>();
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
+            MongoCollection<Document> courseCollection = projectDb.getCollection("courses");
+            Document queryDoc = new Document("windowOpen", true);
+            List<Document> allDocuments = courseCollection.find(queryDoc).into(new ArrayList<>());
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            for(Document d : allDocuments){
+                Course course = mapper.readValue(d.toJson(), Course.class);
+                course.setId(d.get("_id").toString());
+                courseList.add(course);
+            }
+
+            return courseList;
+
+        } catch (JsonMappingException jme) {
+            jme.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An exception occurred while mapping the document.", jme);
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
+    }
+
     @Override
     public Course findById(String id) {
         try{
