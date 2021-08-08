@@ -1,24 +1,21 @@
 package com.revature.p0.services;
 
 import com.revature.p0.models.Course;
-import com.revature.p0.models.User;
 import com.revature.p0.repositories.CourseRepository;
-import com.revature.p0.repositories.UserRepository;
 import com.revature.p0.util.exceptions.InvalidRequestException;
 import com.revature.p0.util.exceptions.ResourcePersistenceException;
 
 public class CourseService {
 
     private final CourseRepository courseRepo;
-
     public CourseService(CourseRepository courseRepo) {
         this.courseRepo = courseRepo;
     }
 
-    public Course register(Course newCourse) {
+    public Course addCourse(Course newCourse) {
 
         if (!isCourseValid(newCourse)) {
-            throw new InvalidRequestException("Invalid user data provided!");
+            throw new InvalidRequestException("Invalid course data provided!");
         }
 
         if (courseRepo.findCourseByTitle(newCourse.getCourseTitle()) != null) {
@@ -38,7 +35,8 @@ public class CourseService {
         if (course.getCourseCode() == null || course.getCourseCode().trim().equals("")) return false;
         if (course.getCourseTitle() == null || course.getCourseTitle().trim().equals("")) return false;
         if (course.getStudentLimit() <= 0) return false;
-        return (course.getCreditHours() <= 0 || course.getCreditHours() > 6);
+        if (course.getCreditHours() <= 0) return false;
+        return true;
     }
 
 

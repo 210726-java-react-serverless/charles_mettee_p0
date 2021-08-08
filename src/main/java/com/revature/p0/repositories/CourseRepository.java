@@ -54,7 +54,6 @@ public class CourseRepository implements CrudRepository<Course> {
     public Course save(Course newCourse) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-
             MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
             MongoCollection<Document> courseCollection = projectDb.getCollection("courses");
             Document newCourseDoc = new Document("courseSubject", newCourse.getCourseSubject())
