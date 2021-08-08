@@ -17,8 +17,8 @@ public class UserRepository implements CrudRepository<User> {
     public User findUserByCredentials(String username, String password) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase bookstoreDatabase = mongoClient.getDatabase("projectdatabase");
-            MongoCollection<Document> usersCollection = bookstoreDatabase.getCollection("users");
+            MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
+            MongoCollection<Document> usersCollection = projectDb.getCollection("users");
             Document queryDoc = new Document("username", username).append("password", password);
             Document authUserDoc = usersCollection.find(queryDoc).first();
 
@@ -56,8 +56,28 @@ public class UserRepository implements CrudRepository<User> {
     }
 
     @Override
-    public User save(User newResource) {
-        return null;
+    public User save(User newUser) {
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+
+            MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
+            MongoCollection<Document> usersCollection = projectDb.getCollection("users");
+            Document newUserDoc = new Document("type", newUser.getUserType())
+                    .append("firstName", newUser.getFirstName())
+                    .append("lastName", newUser.getLastName())
+                    .append("email", newUser.getEmail())
+                    .append("username", newUser.getUsername())
+                    .append("password", newUser.getPassword());
+
+            usersCollection.insertOne(newUserDoc);
+            newUser.setId(newUserDoc.get("_id").toString());
+
+            return newUser;
+
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
     }
 
     @Override
