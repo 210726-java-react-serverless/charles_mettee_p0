@@ -37,10 +37,10 @@ public class AppState {
         router.addScreen(new StudentDashboardScreen(consoleReader, router, userService));
         router.addScreen(new StudentViewAvailableClassesScreen(consoleReader, router, userService));
         router.addScreen(new StudentRegisterForClassScreen(consoleReader, router, userService, studentCourseService));
-        router.addScreen(new StudentViewRegisteredClassesScreen(consoleReader, router, userService, studentCourseService, courseRepo));
-        router.addScreen(new StudentCancelRegisteredClassScreen(consoleReader, router, userService, studentCourseService, courseRepo));
+        router.addScreen(new StudentViewRegisteredClassesScreen(consoleReader, router, userService, studentCourseService, courseService));
+        router.addScreen(new StudentCancelRegisteredClassScreen(consoleReader, router, userService, studentCourseService, courseService));
         router.addScreen(new FacultyDashboardScreen(consoleReader, router, userService));
-        router.addScreen(new FacultyViewClassesScreen(consoleReader, router, userService));
+        router.addScreen(new FacultyViewClassesScreen(consoleReader, router, userService, courseService));
         router.addScreen(new FacultyAddClassScreen(consoleReader, router, courseService));
         router.addScreen(new FacultyEditClassScreen(consoleReader, router, courseService));
         router.addScreen(new FacultyRemoveClassScreen(consoleReader, router, courseService, studentCourseService));

@@ -5,6 +5,8 @@ import com.revature.p0.repositories.CourseRepository;
 import com.revature.p0.util.exceptions.InvalidRequestException;
 import com.revature.p0.util.exceptions.ResourcePersistenceException;
 
+import java.util.List;
+
 public class CourseService {
 
     private final CourseRepository courseRepo;
@@ -33,6 +35,10 @@ public class CourseService {
         return courseRepo.save(newCourse);
     }
 
+    public List<Course> getAllCourses(){
+        return courseRepo.getAllCourses();
+    }
+
     public boolean isCourseValid(Course course) {
         if (course == null) return false;
         if (course.getCourseSubject() == null || course.getCourseSubject().trim().equals("")) return false;
@@ -43,5 +49,23 @@ public class CourseService {
         return true;
     }
 
+    public Course findCourseBySubjectAndCode(String studentId, String courseId) {
+        return courseRepo.findCourseBySubjectAndCode(studentId, courseId);
+    }
 
+    public boolean updateStringField(Course course, String courseSubject, String newValue) {
+        return courseRepo.updateStringField(course, courseSubject, newValue);
+    }
+
+    public boolean updateIntField(Course course, String field, int newValue) {
+        return courseRepo.updateIntField(course, field, newValue);
+    }
+
+    public boolean updateBooleanField(Course course, String windowOpen, boolean newValue) {
+        return courseRepo.updateBooleanField(course, windowOpen, newValue);
+    }
+
+    public Course findById(String courseId) {
+        return courseRepo.findById(courseId);
+    }
 }

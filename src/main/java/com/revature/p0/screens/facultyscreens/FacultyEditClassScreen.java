@@ -26,8 +26,7 @@ public class FacultyEditClassScreen extends Screen {
         //#TODO implement rendering for FacultyEditClassScreen
         System.out.println("\n\tWelcome to the Edit Class Screen.\n");
 
-        CourseRepository cr = new CourseRepository();
-        List<Course> allCourses = cr.getAllCourses();
+        List<Course> allCourses = courseService.getAllCourses();
 
         for(Course c : allCourses){
             System.out.println("\t" + c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
@@ -38,7 +37,7 @@ public class FacultyEditClassScreen extends Screen {
         String subjectCode = (consoleReader.readLine());
         String[] subjectCodeArr = subjectCode.split(" ", 2);
 
-        Course courseToEdit = cr.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
+        Course courseToEdit = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
         System.out.println("\tYou have selected " + courseToEdit.getCourseTitle());
         System.out.println("\tSelect a field that you would like to edit:");
@@ -59,32 +58,32 @@ public class FacultyEditClassScreen extends Screen {
                 case "1":
                     System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCourseSubject() + ")\n\t\t> ");
                     valueSelection = consoleReader.readLine();
-                    cr.updateStringField(courseToEdit, "courseSubject", valueSelection);
+                    courseService.updateStringField(courseToEdit, "courseSubject", valueSelection);
                     break;
                 case "2":
                     System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCourseCode() + ")\n\t\t> ");
                     valueSelection = consoleReader.readLine();
-                    cr.updateStringField(courseToEdit, "courseCode", valueSelection);
+                    courseService.updateStringField(courseToEdit, "courseCode", valueSelection);
                     break;
                 case "3":
                     System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCourseTitle() + ")\n\t\t> ");
                     valueSelection = consoleReader.readLine();
-                    cr.updateStringField(courseToEdit, "courseTitle", valueSelection);
+                    courseService.updateStringField(courseToEdit, "courseTitle", valueSelection);
                     break;
                 case "4":
                     System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getStudentLimit() + ")\n\t\t> ");
                     valueSelection = consoleReader.readLine();
-                    cr.updateIntField(courseToEdit, "studentLimit", Integer.parseInt(valueSelection));
+                    courseService.updateIntField(courseToEdit, "studentLimit", Integer.parseInt(valueSelection));
                     break;
                 case "5":
                     System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCreditHours() + ")\n\t\t> ");
                     valueSelection = consoleReader.readLine();
-                    cr.updateIntField(courseToEdit, "creditHours", Integer.parseInt(valueSelection));
+                    courseService.updateIntField(courseToEdit, "creditHours", Integer.parseInt(valueSelection));
                     break;
                 case "6":
                     System.out.print("\t\tEnter a new value true/false (current value: " + courseToEdit.isWindowOpen() + ")\n\t\t> ");
                     valueSelection = consoleReader.readLine();
-                    cr.updateBooleanField(courseToEdit, "windowOpen", Boolean.parseBoolean(valueSelection));
+                    courseService.updateBooleanField(courseToEdit, "windowOpen", Boolean.parseBoolean(valueSelection));
                     break;
                 case "7":
                     router.navigate("/FacultyDashboard");

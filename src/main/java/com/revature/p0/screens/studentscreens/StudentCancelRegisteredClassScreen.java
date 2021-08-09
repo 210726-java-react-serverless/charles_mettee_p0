@@ -2,8 +2,8 @@ package com.revature.p0.screens.studentscreens;
 
 import com.revature.p0.models.Course;
 import com.revature.p0.models.StudentCourse;
-import com.revature.p0.repositories.CourseRepository;
 import com.revature.p0.screens.Screen;
+import com.revature.p0.services.CourseService;
 import com.revature.p0.services.StudentCourseService;
 import com.revature.p0.services.UserService;
 import com.revature.p0.util.ScreenRouter;
@@ -15,13 +15,14 @@ public class StudentCancelRegisteredClassScreen extends Screen {
 
     public final UserService userService;
     public final StudentCourseService studentCourseService;
-    public CourseRepository courseRepo;
+    public final CourseService courseService;
+   // public CourseRepository courseRepo;
 
-    public StudentCancelRegisteredClassScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService, StudentCourseService studentCourseService, CourseRepository courseRepo) {
+    public StudentCancelRegisteredClassScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService, StudentCourseService studentCourseService, CourseService courseService) {
         super("StudentCancelRegisteredClassScreen", "/StudentCancelRegisteredClass", consoleReader, router);
         this.userService = userService;
         this.studentCourseService = studentCourseService;
-        this.courseRepo = courseRepo;
+        this.courseService = courseService;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class StudentCancelRegisteredClassScreen extends Screen {
         List<StudentCourse> registeredCourses = studentCourseService.getRegisteredCourses(userService.getSession().getCurrentUser().getId());
 
         for(StudentCourse sc : registeredCourses){
-            Course c = courseRepo.findById(sc.getCourseId());
+            Course c = courseService.findById(sc.getCourseId());
             System.out.println("\t\t" + c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
         }
 
@@ -40,7 +41,7 @@ public class StudentCancelRegisteredClassScreen extends Screen {
         String subjectCode = (consoleReader.readLine());
         String[] subjectCodeArr = subjectCode.split(" ", 2);
 
-        Course courseToDelete = courseRepo.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
+        Course courseToDelete = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
         studentCourseService.cancelCourse(userService.getSession().getCurrentUser().getId(), courseToDelete.getId());
 
@@ -54,8 +55,8 @@ public class StudentCancelRegisteredClassScreen extends Screen {
                 "\n\t(2) Cancel another course" +
                 "\n\t(3) Register for Course" +
                 "\n\t(4) View Available Courses" +
-                "\n\t(3) View My Registered Courses" +
-                "\n\t(5) Logout\n\t> ");
+                "\n\t(5) View My Registered Courses" +
+                "\n\t(6) Logout\n\t> ");
 
         String userSelection = consoleReader.readLine();
         switch (userSelection) {

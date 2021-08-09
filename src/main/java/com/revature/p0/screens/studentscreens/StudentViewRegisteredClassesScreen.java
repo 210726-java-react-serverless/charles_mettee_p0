@@ -2,8 +2,8 @@ package com.revature.p0.screens.studentscreens;
 
 import com.revature.p0.models.Course;
 import com.revature.p0.models.StudentCourse;
-import com.revature.p0.repositories.CourseRepository;
 import com.revature.p0.screens.Screen;
+import com.revature.p0.services.CourseService;
 import com.revature.p0.services.StudentCourseService;
 import com.revature.p0.services.UserService;
 import com.revature.p0.util.ScreenRouter;
@@ -15,13 +15,13 @@ public class StudentViewRegisteredClassesScreen extends Screen {
 
     private final UserService userService;
     private final StudentCourseService studentCourseService;
-    private CourseRepository courseRepo;
+    private final CourseService courseService;
 
-    public StudentViewRegisteredClassesScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService, StudentCourseService studentCourseService, CourseRepository courseRepo) {
+    public StudentViewRegisteredClassesScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService, StudentCourseService studentCourseService, CourseService courseService) {
         super("StudentViewRegisteredClassesScreen", "/StudentViewRegisteredClasses", consoleReader, router);
         this.userService = userService;
         this.studentCourseService = studentCourseService;
-        this.courseRepo = courseRepo;
+        this.courseService = courseService;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class StudentViewRegisteredClassesScreen extends Screen {
         List<StudentCourse> registeredCourses = studentCourseService.getRegisteredCourses(userService.getSession().getCurrentUser().getId());
 
         for(StudentCourse sc : registeredCourses){
-            Course c = courseRepo.findById(sc.getCourseId());
+            Course c = courseService.findById(sc.getCourseId());
             System.out.println("\t\t" +c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
         }
 

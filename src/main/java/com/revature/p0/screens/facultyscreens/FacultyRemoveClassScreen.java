@@ -33,8 +33,8 @@ public class FacultyRemoveClassScreen extends Screen {
         //#TODO implement rendering for FacultyRemoveClassScreen
         System.out.println("\n\tWelcome to the Remove Class Screen.\n");
 
-        CourseRepository cr = new CourseRepository(); //#TODO fix this
-        List<Course> allCourses = cr.getAllCourses();
+
+        List<Course> allCourses = courseService.getAllCourses();
 
         for(Course c : allCourses){
             System.out.println("\t" + c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
@@ -44,7 +44,7 @@ public class FacultyRemoveClassScreen extends Screen {
         String subjectCode = (consoleReader.readLine());
         String[] subjectCodeArr = subjectCode.split(" ", 2);
 
-        Course courseToDelete = cr.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
+        Course courseToDelete = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
         //Remove all in StudentCourseRepository
         studentCourseService.removeAllFromCourse(courseToDelete.getId());

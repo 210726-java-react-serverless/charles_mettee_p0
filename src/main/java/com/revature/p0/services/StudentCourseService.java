@@ -33,6 +33,7 @@ public class StudentCourseService {
         return studentCourseRepo.deleteByCourseId(courseId);
     }
 
+
     public List<StudentCourse> getRegisteredCourses(String id){
         return studentCourseRepo.findByStudentId(id);
     }
