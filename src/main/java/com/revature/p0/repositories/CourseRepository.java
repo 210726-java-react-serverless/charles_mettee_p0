@@ -178,8 +178,6 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
-
-
     public Course findCourseByTitle(String courseTitle) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
