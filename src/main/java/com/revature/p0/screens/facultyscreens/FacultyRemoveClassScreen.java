@@ -46,16 +46,43 @@ public class FacultyRemoveClassScreen extends Screen {
 
         Course courseToDelete = cr.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
-
         //Remove all in StudentCourseRepository
         studentCourseService.removeAllFromCourse(courseToDelete.getId());
         //Remove course from CourseRepository
         courseService.deleteCourse(courseToDelete);
 
+        System.out.println("\t" + courseToDelete.getCourseTitle() + " has successfully been removed from the course catalog.");
 
+        System.out.print("\n\t(1) Return to Faculty Dashboard" +
+                "\n\t(2) Remove another Course" +
+                "\n\t(3) Add a Course" +
+                "\n\t(4) Edit a Course" +
+                "\n\t(5) View all Courses" +
+                "\n\t(6) Logout\n\t> ");
 
-
-
-
+        String userSelection = consoleReader.readLine();
+        switch (userSelection) {
+            case "1":
+                router.navigate("/FacultyDashboard");
+                break;
+            case "2":
+                router.navigate("/FacultyRemoveClass");
+                break;
+            case "3":
+                router.navigate("/FacultyAddClass");
+                break;
+            case "4":
+                router.navigate("/FacultyEditClass");
+                break;
+            case "5":
+                router.navigate("/FacultyViewClasses");
+                break;
+            case "6":
+                System.out.println("Logging out...");
+                router.navigate("/Welcome");
+                break;
+            default:
+                System.out.print("You provided an invalid value, please try again.\n");
+        }
     }
 }
