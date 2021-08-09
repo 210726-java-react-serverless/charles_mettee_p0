@@ -6,7 +6,7 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
 
     @Override
     public StudentCourse findById(String id) {
-
+        return null;
     }
 
     @Override
