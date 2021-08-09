@@ -22,21 +22,10 @@ public class UserService {
     }
 
     public User register(User newUser) {
-
-        if (!isUserValid(newUser)) {
-            throw new InvalidRequestException("Invalid user data provided!");
-        }
-
-        if (userRepo.findUserByUsername(newUser.getUsername()) != null) {
-            throw new ResourcePersistenceException("Provided username is already taken!");
-        }
-
-        if (userRepo.findUserByEmail(newUser.getEmail()) != null) {
-            throw new ResourcePersistenceException("Provided username is already taken!");
-        }
-
+        if (!isUserValid(newUser)) throw new InvalidRequestException("Invalid user data provided!");
+        if (userRepo.findUserByUsername(newUser.getUsername()) != null) throw new ResourcePersistenceException("Provided username is already taken!");
+        if (userRepo.findUserByEmail(newUser.getEmail()) != null) throw new ResourcePersistenceException("Provided username is already taken!");
         return userRepo.save(newUser);
-
     }
 
     public User login(String username, String password) {
@@ -47,9 +36,7 @@ public class UserService {
 
         User authUser = userRepo.findUserByCredentials(username, password);
 
-        if (authUser == null) {
-            throw new AuthenticationException("Invalid credentials provided!");
-        }
+        if (authUser == null) throw new AuthenticationException("Invalid credentials provided!");
 
         session.setCurrentUser(authUser);
 
