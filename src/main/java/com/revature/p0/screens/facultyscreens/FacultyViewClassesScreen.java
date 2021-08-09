@@ -28,8 +28,33 @@ public class FacultyViewClassesScreen extends Screen {
         }
 
         router.navigate("/FacultyDashboard"); //#TODO options to navigate back to dashboard, or to edit/remove/add Course screens
+        System.out.print("\n\t(1) Return to Faculty Dashboard" +
+                "\n\t(2) Add a Course" +
+                "\n\t(3) Remove a Course" +
+                "\n\t(4) Edit a Course" +
+                "\n\t(5) Logout\n\t> ");
 
-
+        String userSelection = consoleReader.readLine();
+        switch (userSelection) {
+            case "1":
+                router.navigate("/FacultyDashboard");
+                break;
+            case "2":
+                router.navigate("/FacultyAddClass");
+                break;
+            case "3":
+                router.navigate("/FacultyRemoveClass");
+                break;
+            case "4":
+                router.navigate("/FacultyEditClass");
+                break;
+            case "5":
+                System.out.println("Logging out...");
+                router.navigate("/Welcome");
+                break;
+            default:
+                System.out.print("You provided an invalid value, please try again.\n");
+        }
 
     }
 }
