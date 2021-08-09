@@ -86,7 +86,6 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
     public StudentCourse save(StudentCourse newResource) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-
             MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
             MongoCollection<Document> studentCoursesCollection = projectDb.getCollection("student_courses");
             Document newStudentCourseDoc = new Document("studentId", newResource.getStudentId())
@@ -111,5 +110,22 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
     @Override
     public boolean deleteById(String id) {
         return false;
+    }
+
+    public boolean deleteByStudentIdAndCourseId(String studentId, String courseId){
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
+            MongoCollection<Document> studentCoursesCollection = projectDb.getCollection("student_courses");
+            Document deletionDoc = new Document("studentId", studentId)
+                    .append("courseId", courseId);
+
+            studentCoursesCollection.deleteOne(deletionDoc);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
     }
 }

@@ -23,6 +23,11 @@ public class StudentCourseService {
         return studentCourseRepo.save(studentCourse);
     }
 
+    public boolean cancelCourse(String studentId, String courseId){
+        //#TODO validate input
+        return studentCourseRepo.deleteByStudentIdAndCourseId(studentId, courseId);
+    }
+
     public List<StudentCourse> getRegisteredCourses(String id){
         return studentCourseRepo.findByStudentId(id);
     }
