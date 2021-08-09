@@ -54,8 +54,6 @@ public class FacultyAddClassScreen extends Screen {
             router.navigate("/FacultyDashboard");
         }
 
-        router.navigate("/FacultyDashboard"); //#TODO implement routing options
-
         System.out.print("\n\t(1) Return to Faculty Dashboard" +
                 "\n\t(2) Add another Course" +
                 "\n\t(3) View all Courses" +
