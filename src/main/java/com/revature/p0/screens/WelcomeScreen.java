@@ -2,7 +2,7 @@ package com.revature.p0.screens;
 
 import com.revature.p0.util.ScreenRouter;
 import java.io.BufferedReader;
-import java.io.IOException;
+import static com.revature.p0.util.AppState.shutdown;
 
 public class WelcomeScreen extends Screen {
 
@@ -28,7 +28,8 @@ public class WelcomeScreen extends Screen {
                 break;
             case "3":
                 System.out.println("Closing Application...");
-                System.exit(0);
+                shutdown();
+                break;
             default:
                 System.out.print("You provided an invalid value, please try again.\n");
         }

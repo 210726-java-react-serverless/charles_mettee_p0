@@ -68,7 +68,8 @@ public class StudentRegisterForClassScreen extends Screen {
                 router.navigate("/StudentCancelRegisteredClass");
                 break;
             case "5":
-                router.navigate("/Welcome"); //#TODO handle logging out
+                System.out.println("Logging out...");
+                router.navigate("/Welcome");
                 break;
             default:
                 System.out.print("You provided an invalid value, please try again.\n");
