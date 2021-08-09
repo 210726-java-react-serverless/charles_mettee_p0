@@ -8,6 +8,8 @@ import com.revature.p0.util.UserSession;
 import com.revature.p0.util.exceptions.InvalidRequestException;
 import com.revature.p0.util.exceptions.ResourcePersistenceException;
 
+import java.util.List;
+
 public class StudentCourseService {
 
     private final StudentCourseRepository studentCourseRepo;
@@ -19,6 +21,10 @@ public class StudentCourseService {
     public StudentCourse registerCourse(StudentCourse studentCourse){
         //#TODO Validate input
         return studentCourseRepo.save(studentCourse);
+    }
+
+    public List<StudentCourse> getRegisteredCourses(String id){
+        return studentCourseRepo.findByStudentId(id);
     }
 
 
