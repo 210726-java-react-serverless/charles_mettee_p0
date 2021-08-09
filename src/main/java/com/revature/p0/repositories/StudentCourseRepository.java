@@ -128,4 +128,19 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
+
+    public boolean deleteByCourseId(String courseId){
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
+            MongoCollection<Document> studentCoursesCollection = projectDb.getCollection("student_courses");
+            Document deletionDoc = new Document("courseId", courseId);
+            studentCoursesCollection.deleteMany(deletionDoc);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
+    }
 }

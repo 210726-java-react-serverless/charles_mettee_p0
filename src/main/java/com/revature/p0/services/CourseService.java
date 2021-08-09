@@ -12,6 +12,10 @@ public class CourseService {
         this.courseRepo = courseRepo;
     }
 
+    public boolean deleteCourse(Course courseToDelete){
+        return courseRepo.deleteById(courseToDelete.getId());
+    }
+
     public Course addCourse(Course newCourse) {
 
         if (!isCourseValid(newCourse)) {
