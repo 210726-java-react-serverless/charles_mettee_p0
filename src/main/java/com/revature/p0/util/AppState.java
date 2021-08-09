@@ -1,6 +1,7 @@
 package com.revature.p0.util;
 
 import com.revature.p0.repositories.CourseRepository;
+import com.revature.p0.repositories.StudentCourseRepository;
 import com.revature.p0.repositories.UserRepository;
 import com.revature.p0.screens.LoginScreen;
 import com.revature.p0.screens.RegisterScreen;
@@ -13,6 +14,7 @@ import com.revature.p0.screens.studentscreens.StudentDashboardScreen;
 import com.revature.p0.screens.studentscreens.StudentRegisterForClassScreen;
 import com.revature.p0.screens.studentscreens.StudentViewAvailableClassesScreen;
 import com.revature.p0.services.CourseService;
+import com.revature.p0.services.StudentCourseService;
 import com.revature.p0.services.UserService;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -29,15 +31,17 @@ public class AppState {
 
         UserSession userSession = new UserSession();
         UserRepository userRepo = new UserRepository();
-        CourseRepository courseRepo = new CourseRepository();
         UserService userService = new UserService(userRepo, userSession);
+        CourseRepository courseRepo = new CourseRepository();
         CourseService courseService = new CourseService(courseRepo);
+        StudentCourseRepository studentCourseRepo = new StudentCourseRepository();
+        StudentCourseService studentCourseService = new StudentCourseService(studentCourseRepo);
 
         router.addScreen(new LoginScreen(consoleReader, router, userService));
         router.addScreen(new RegisterScreen(consoleReader, router, userService));
         router.addScreen(new StudentDashboardScreen(consoleReader, router, userService));
         router.addScreen(new StudentViewAvailableClassesScreen(consoleReader, router, userService));
-        router.addScreen(new StudentRegisterForClassScreen(consoleReader, router, userService));
+        router.addScreen(new StudentRegisterForClassScreen(consoleReader, router, userService, studentCourseService));
         router.addScreen(new FacultyDashboardScreen(consoleReader, router, userService));
         router.addScreen(new FacultyViewClassesScreen(consoleReader, router, userService));
         router.addScreen(new FacultyAddClassScreen(consoleReader, router, courseService));
