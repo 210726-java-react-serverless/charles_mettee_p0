@@ -49,8 +49,9 @@ public class StudentRegisterForClassScreen extends Screen {
 
         System.out.print("\n\t(1) Register for Another Course" +
                 "\n\t(2) View Available Courses" +
-                "\n\t(3) Cancel A Registered Course" +
-                "\n\t(4) Logout\n\t> ");
+                "\n\t(3) View Registered Courses" +
+                "\n\t(4) Cancel A Registered Course" +
+                "\n\t(5) Logout\n\t> ");
 
         String userSelection = consoleReader.readLine();
         switch (userSelection) {
@@ -61,9 +62,12 @@ public class StudentRegisterForClassScreen extends Screen {
                 router.navigate("/StudentViewAvailableClasses");
                 break;
             case "3":
-                router.navigate("/StudentCancelRegisteredClass");
+                router.navigate("/StudentViewRegisteredClasses");
                 break;
             case "4":
+                router.navigate("/StudentCancelRegisteredClass");
+                break;
+            case "5":
                 router.navigate("/Welcome"); //#TODO handle logging out
                 break;
             default:
