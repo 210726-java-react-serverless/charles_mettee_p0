@@ -7,6 +7,8 @@ import com.revature.p0.services.CourseService;
 import com.revature.p0.services.StudentCourseService;
 import com.revature.p0.services.UserService;
 import com.revature.p0.util.ScreenRouter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.util.List;
@@ -16,7 +18,8 @@ public class StudentCancelRegisteredClassScreen extends Screen {
     public final UserService userService;
     public final StudentCourseService studentCourseService;
     public final CourseService courseService;
-   // public CourseRepository courseRepo;
+
+    private final Logger logger = LogManager.getLogger(StudentCancelRegisteredClassScreen.class);
 
     public StudentCancelRegisteredClassScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService, StudentCourseService studentCourseService, CourseService courseService) {
         super("StudentCancelRegisteredClassScreen", "/StudentCancelRegisteredClass", consoleReader, router);
@@ -41,18 +44,24 @@ public class StudentCancelRegisteredClassScreen extends Screen {
         String subjectCode = (consoleReader.readLine());
         String[] subjectCodeArr = subjectCode.split(" ", 2);
 
-        Course courseToDelete = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
+        try {
+            Course courseToDelete = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
+            studentCourseService.cancelCourse(userService.getSession().getCurrentUser().getId(), courseToDelete.getId());
 
-        studentCourseService.cancelCourse(userService.getSession().getCurrentUser().getId(), courseToDelete.getId());
+            System.out.print("\tYou have successfully unregistered from " +
+                    courseToDelete.getCourseSubject() + " " +
+                    courseToDelete.getCourseCode() + " : " +
+                    courseToDelete.getCourseTitle());
 
-
-        System.out.print("\tYou have successfully unregistered from " +
-                                courseToDelete.getCourseSubject() + " " +
-                                courseToDelete.getCourseCode() + " : " +
-                                courseToDelete.getCourseTitle());
+            logger.info("Successfully unregistered from course!");
+        } catch (Exception e) {
+            System.out.println("\tInvalid Input. You have not unregistered from any courses.");
+            logger.error(e.getMessage());
+            logger.debug("Student did not unregister from any course!");
+        }
 
         System.out.print("\n\n\t(1) Return to Student Dashboard" +
-                "\n\t(2) Cancel another course" +
+                "\n\t(2) Cancel a course" +
                 "\n\t(3) Register for Course" +
                 "\n\t(4) View Available Courses" +
                 "\n\t(5) View My Registered Courses" +
