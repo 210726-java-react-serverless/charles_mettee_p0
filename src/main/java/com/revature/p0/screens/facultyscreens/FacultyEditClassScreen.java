@@ -1,7 +1,6 @@
 package com.revature.p0.screens.facultyscreens;
 
 import com.revature.p0.models.Course;
-import com.revature.p0.repositories.CourseRepository;
 import com.revature.p0.screens.Screen;
 import com.revature.p0.services.CourseService;
 import com.revature.p0.util.ScreenRouter;
@@ -37,64 +36,83 @@ public class FacultyEditClassScreen extends Screen {
         String subjectCode = (consoleReader.readLine());
         String[] subjectCodeArr = subjectCode.split(" ", 2);
 
+        if(subjectCodeArr.length != 2){
+            logger.info("User has not entered two arguments (Course Subject and Course Code).");
+            subjectCodeArr = new String[2];
+            subjectCodeArr[0] = "";
+            subjectCodeArr[1] = "";
+        }
+
         Course courseToEdit = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
-        System.out.println("\tYou have selected " + courseToEdit.getCourseTitle());
-        System.out.println("\tSelect a field that you would like to edit:");
-        System.out.print("\t\t(1) Course Subject" +
-                            "\n\t\t(2) Course Code" +
-                            "\n\t\t(3) Course Title" +
-                            "\n\t\t(4) Student Limit" +
-                            "\n\t\t(5) Credit Hours" +
-                            "\n\t\t(6) Registration Availability" +
-                            "\n\t\t(7) No changes\n\t\t> ");
+        try {
+            System.out.println("\tYou have selected " + courseToEdit.getCourseTitle());
+            System.out.println("\tSelect a field that you would like to edit:");
+            System.out.print("\t\t(1) Course Subject" +
+                    "\n\t\t(2) Course Code" +
+                    "\n\t\t(3) Course Title" +
+                    "\n\t\t(4) Student Limit" +
+                    "\n\t\t(5) Credit Hours" +
+                    "\n\t\t(6) Registration Availability" +
+                    "\n\t\t(7) No changes\n\t\t> ");
 
-
-        String fieldSelection;
-        String valueSelection;
-        do{
-            fieldSelection = consoleReader.readLine();
-            switch (fieldSelection) {
-                case "1":
-                    System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCourseSubject() + ")\n\t\t> ");
-                    valueSelection = consoleReader.readLine();
-                    courseService.updateStringField(courseToEdit, "courseSubject", valueSelection);
-                    break;
-                case "2":
-                    System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCourseCode() + ")\n\t\t> ");
-                    valueSelection = consoleReader.readLine();
-                    courseService.updateStringField(courseToEdit, "courseCode", valueSelection);
-                    break;
-                case "3":
-                    System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCourseTitle() + ")\n\t\t> ");
-                    valueSelection = consoleReader.readLine();
-                    courseService.updateStringField(courseToEdit, "courseTitle", valueSelection);
-                    break;
-                case "4":
-                    System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getStudentLimit() + ")\n\t\t> ");
-                    valueSelection = consoleReader.readLine();
-                    courseService.updateIntField(courseToEdit, "studentLimit", Integer.parseInt(valueSelection));
-                    break;
-                case "5":
-                    System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCreditHours() + ")\n\t\t> ");
-                    valueSelection = consoleReader.readLine();
-                    courseService.updateIntField(courseToEdit, "creditHours", Integer.parseInt(valueSelection));
-                    break;
-                case "6":
-                    System.out.print("\t\tEnter a new value true/false (current value: " + courseToEdit.isWindowOpen() + ")\n\t\t> ");
-                    valueSelection = consoleReader.readLine();
-                    courseService.updateBooleanField(courseToEdit, "windowOpen", Boolean.parseBoolean(valueSelection));
-                    break;
-                case "7":
-                    router.navigate("/FacultyDashboard");
-                    break;
-
-                default:
-                    System.out.print("\t\tYou provided an invalid value, please try again.\n\t\t> ");
-            }
-        } while (!(fieldSelection.equals("1") || fieldSelection.equals("2") ||
-                fieldSelection.equals("3") || fieldSelection.equals("4") ||
-                fieldSelection.equals("5") || fieldSelection.equals("6") || fieldSelection.equals("7")));
+            String fieldSelection;
+            String valueSelection;
+            do {
+                fieldSelection = consoleReader.readLine();
+                switch (fieldSelection) {
+                    case "1":
+                        System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCourseSubject() + ")\n\t\t> ");
+                        valueSelection = consoleReader.readLine();
+                        courseService.updateStringField(courseToEdit, "courseSubject", valueSelection);
+                        break;
+                    case "2":
+                        System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCourseCode() + ")\n\t\t> ");
+                        valueSelection = consoleReader.readLine();
+                        courseService.updateStringField(courseToEdit, "courseCode", valueSelection);
+                        break;
+                    case "3":
+                        System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCourseTitle() + ")\n\t\t> ");
+                        valueSelection = consoleReader.readLine();
+                        courseService.updateStringField(courseToEdit, "courseTitle", valueSelection);
+                        break;
+                    case "4":
+                        System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getStudentLimit() + ")\n\t\t> ");
+                        valueSelection = consoleReader.readLine();
+                        try {
+                            courseService.updateIntField(courseToEdit, "studentLimit", Integer.parseInt(valueSelection));
+                        } catch (NumberFormatException nfe){
+                            courseService.updateIntField(courseToEdit, "studentLimit", -1); //negative values will always return false (i.e., no update)
+                        }
+                        break;
+                    case "5":
+                        System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCreditHours() + ")\n\t\t> ");
+                        valueSelection = consoleReader.readLine();
+                        try {
+                            courseService.updateIntField(courseToEdit, "creditHours", Integer.parseInt(valueSelection));
+                        } catch (NumberFormatException nfe){
+                            courseService.updateIntField(courseToEdit, "creditHours", -1); //negative values will return false (i.e., no update)
+                        }
+                        break;
+                    case "6":
+                        System.out.print("\t\tEnter a new value true/false (current value: " + courseToEdit.isWindowOpen() + ")\n\t\t> ");
+                        valueSelection = consoleReader.readLine();
+                        courseService.updateBooleanField(courseToEdit, "windowOpen", Boolean.parseBoolean(valueSelection));
+                        break;
+                    case "7":
+                        router.navigate("/FacultyDashboard");
+                        break;
+                    default:
+                        System.out.print("\t\tYou provided an invalid value, please try again.\n\t\t> ");
+                }
+            } while (!(fieldSelection.equals("1") || fieldSelection.equals("2") ||
+                    fieldSelection.equals("3") || fieldSelection.equals("4") ||
+                    fieldSelection.equals("5") || fieldSelection.equals("6") || fieldSelection.equals("7")));
+        } catch (NullPointerException npe) {
+            System.out.println("\tInvalid Input. You have not edited any courses.");
+            logger.error(npe.getMessage());
+            logger.debug("A Subject/Code combination matching input does not exist! No course has been edited!");
+        }
 
         System.out.print("\n\t(1) Return to Faculty Dashboard" +
                 "\n\t(2) Continue editing Courses" +

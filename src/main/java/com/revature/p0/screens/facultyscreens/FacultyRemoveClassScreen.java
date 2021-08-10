@@ -55,14 +55,11 @@ public class FacultyRemoveClassScreen extends Screen {
             System.out.println("\t" + courseToDelete.getCourseTitle() + " has successfully been removed from the course catalog.");
             logger.info("Course successfully removed from the database!");
             logger.info("All students have been unregistered from the deleted course!");
-
         } catch (NullPointerException npe) {
             System.out.println("\tInvalid Input. No courses have been removed from the catalog.");
             logger.error(npe.getMessage());
             logger.debug("A Subject/Code combination matching input does not exist! No course was removed from the catalog!");
         }
-
-
 
         System.out.print("\n\t(1) Return to Faculty Dashboard" +
                 "\n\t(2) Remove another Course" +

@@ -65,12 +65,48 @@ public class CourseService {
         return courseRepo.findCourseBySubjectAndCode(studentId, courseId);
     }
 
-    public boolean updateStringField(Course course, String courseSubject, String newValue) {
-        return courseRepo.updateStringField(course, courseSubject, newValue);
+    public boolean updateStringField(Course course, String field, String newValue) {
+        if(isStringUpdateValid(field, newValue)) {
+            return courseRepo.updateStringField(course, field, newValue);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isStringUpdateValid(String field, String newValue){
+        if (newValue.trim().equals("")) return false;
+        if(field.equals("courseSubject")){
+            if (newValue.length() != 4) return false;
+            if (!(Character.isUpperCase(newValue.charAt(0)) &&
+                    Character.isUpperCase(newValue.charAt(1)) &&
+                    Character.isUpperCase(newValue.charAt(2)) &&
+                    Character.isUpperCase(newValue.charAt(3)))) return false;
+        }
+        if(field.equals("courseCode")){
+            if (newValue.length() != 4) return false;
+            try {
+                Integer.parseInt(newValue);
+            } catch (NumberFormatException nfe) {
+                return false;
+            }
+        }
+        if(field.equals("courseTitle")){
+            if (newValue.length() < 5) return false;
+        }
+        return true;
     }
 
     public boolean updateIntField(Course course, String field, int newValue) {
-        return courseRepo.updateIntField(course, field, newValue);
+        if(isIntUpdateValid(newValue)) {
+            return courseRepo.updateIntField(course, field, newValue);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isIntUpdateValid(int newValue){
+        if(newValue <= 0) return false;
+        return true;
     }
 
     public boolean updateBooleanField(Course course, String windowOpen, boolean newValue) {
