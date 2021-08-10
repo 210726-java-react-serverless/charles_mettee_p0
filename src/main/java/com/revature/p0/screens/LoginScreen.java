@@ -28,20 +28,20 @@ public class LoginScreen extends Screen{
         System.out.print("\tPassword\n\t> ");
         String password = consoleReader.readLine();
 
-        try {
-            User authUser = userService.login(username, password);
-            System.out.println("Login successful!");
+        User authUser = userService.login(username, password);
 
-            if(authUser instanceof Student) {
-                router.navigate("/StudentDashboard");
-            } else if(authUser instanceof FacultyMember){
-                router.navigate("/FacultyDashboard");
-            }
-
-        } catch (AuthenticationException e) {
-            System.out.println("No user found with provided credentials!");
-            System.out.println("Navigating back to welcome screen...");
-            router.navigate("/welcome");
+        if(authUser instanceof Student) {
+            System.out.println("\tLogin successful...\n");
+            router.navigate("/StudentDashboard");
+        } else if(authUser instanceof FacultyMember){
+            System.out.println("\tLogin successful...");
+            router.navigate("/FacultyDashboard");
+        } else {
+            System.out.println("\tNo user found with provided credentials!");
+            System.out.println("\tNavigating back to welcome screen...");
+            router.navigate("/Welcome");
         }
+
+
     }
 }

@@ -2,13 +2,17 @@ package com.revature.p0.services;
 
 import com.revature.p0.models.User;
 import com.revature.p0.repositories.UserRepository;
+import com.revature.p0.screens.RegisterScreen;
 import com.revature.p0.util.UserSession;
 import com.revature.p0.util.exceptions.AuthenticationException;
 import com.revature.p0.util.exceptions.InvalidRequestException;
 import com.revature.p0.util.exceptions.ResourcePersistenceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UserService {
 
+    private final Logger logger = LogManager.getLogger(UserService.class);
     private final UserRepository userRepo;
     private final UserSession session;
 
@@ -24,19 +28,28 @@ public class UserService {
     public User register(User newUser) {
         if (!isUserValid(newUser)) throw new InvalidRequestException("Invalid user data provided!");
         if (userRepo.findUserByUsername(newUser.getUsername()) != null) throw new ResourcePersistenceException("Provided username is already taken!");
-        if (userRepo.findUserByEmail(newUser.getEmail()) != null) throw new ResourcePersistenceException("Provided username is already taken!");
+        if (userRepo.findUserByEmail(newUser.getEmail()) != null) throw new ResourcePersistenceException("Provided email is already taken!");
         return userRepo.save(newUser);
     }
 
     public User login(String username, String password) {
-
-        if (username == null || username.trim().equals("") || password == null || password.trim().equals("")) {
-            throw new InvalidRequestException("Invalid user credentials provided!");
+        try {
+            if (username == null || username.trim().equals("") || password == null || password.trim().equals("")) {
+                throw new InvalidRequestException("Invalid user credentials provided!");
+            }
+        } catch (InvalidRequestException ire){
+            logger.error(ire.getMessage());
+            logger.debug("User provided whitespace for username and/or password fields!");
         }
 
         User authUser = userRepo.findUserByCredentials(username, password);
 
-        if (authUser == null) throw new AuthenticationException("Invalid credentials provided!");
+        try {
+            if (authUser == null) throw new AuthenticationException("Invalid credentials provided!");
+        } catch (AuthenticationException ae){
+            logger.error(ae.getMessage());
+            logger.debug("The provided username/password pair does not exist in the database!");
+        }
 
         session.setCurrentUser(authUser);
 

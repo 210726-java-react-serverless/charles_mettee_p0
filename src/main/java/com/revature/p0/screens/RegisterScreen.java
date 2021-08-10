@@ -57,13 +57,6 @@ public class RegisterScreen extends Screen {
             logger.debug("User not registered!");
             router.navigate("/welcome");
         }
-
-
-
-
-
-
         router.navigate("/Welcome"); //return to the welcome screen upon registration completion.
-
     }
 }

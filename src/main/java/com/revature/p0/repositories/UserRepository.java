@@ -2,17 +2,24 @@ package com.revature.p0.repositories;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.revature.p0.models.FacultyMember;
 import com.revature.p0.models.Student;
 import com.revature.p0.models.User;
+import com.revature.p0.screens.RegisterScreen;
 import com.revature.p0.util.MongoClientFactory;
 import com.revature.p0.util.exceptions.DataSourceException;
+import com.revature.p0.util.exceptions.ResourcePersistenceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 
 public class UserRepository implements CrudRepository<User> {
+
+    private final Logger logger = LogManager.getLogger(RegisterScreen.class);
 
     public User findUserByCredentials(String username, String password) {
         try {
@@ -22,9 +29,7 @@ public class UserRepository implements CrudRepository<User> {
             Document queryDoc = new Document("username", username).append("password", password);
             Document authUserDoc = usersCollection.find(queryDoc).first();
 
-            if (authUserDoc == null) {
-                return null;
-            }
+            if (authUserDoc == null) return null;
 
             ObjectMapper mapper = new ObjectMapper();
 
@@ -75,7 +80,7 @@ public class UserRepository implements CrudRepository<User> {
             return newUser;
 
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+           // e.printStackTrace(); // TODO log this to a file
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
@@ -90,13 +95,51 @@ public class UserRepository implements CrudRepository<User> {
         return false;
     }
 
-    // TODO implement this so that we can prevent multiple users from having the same username!
     public User findUserByUsername(String username) {
-        return null;
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
+            MongoCollection<Document> usersCollection = projectDb.getCollection("users");
+            Document queryDoc = new Document("username", username);
+            Document authUserDoc = usersCollection.find(queryDoc).first();
+
+            if (authUserDoc == null) return null;
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            User authUser = mapper.readValue(authUserDoc.toJson(), Student.class);
+            return authUser;
+
+        } catch (JsonMappingException jme) {
+            jme.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An exception occurred while mapping the document.", jme);
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
     }
 
-    // TODO implement this so that we can prevent multiple users from having the same email!
     public User findUserByEmail(String email) {
-        return null;
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
+            MongoCollection<Document> usersCollection = projectDb.getCollection("users");
+            Document queryDoc = new Document("email", email);
+            Document authUserDoc = usersCollection.find(queryDoc).first();
+
+            if (authUserDoc == null) return null;
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            User authUser = mapper.readValue(authUserDoc.toJson(), Student.class);
+            return authUser;
+
+        } catch (JsonMappingException jme) {
+            jme.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An exception occurred while mapping the document.", jme);
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
     }
 }
