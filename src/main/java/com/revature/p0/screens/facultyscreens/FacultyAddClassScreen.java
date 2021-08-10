@@ -3,7 +3,6 @@ package com.revature.p0.screens.facultyscreens;
 import com.revature.p0.models.Course;
 import com.revature.p0.screens.Screen;
 import com.revature.p0.services.CourseService;
-import com.revature.p0.services.UserService;
 import com.revature.p0.util.ScreenRouter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +37,9 @@ public class FacultyAddClassScreen extends Screen {
             System.out.print("\tStudent Limit\n\t> ");
             studentLimit = Integer.parseInt(consoleReader.readLine());
         } catch (NumberFormatException nfe) {
-            studentLimit = -1;
+            logger.error(nfe.getMessage());
+            logger.debug("A non-integer was entered for the Student Limit field!");
+            studentLimit = -1; //set to -1 so that isCourseValid method will return false and Course will not be added to database
         }
 
         int creditHours = -1;
@@ -46,7 +47,9 @@ public class FacultyAddClassScreen extends Screen {
             System.out.print("\tCredit Hours\n\t> ");
             creditHours = Integer.parseInt(consoleReader.readLine());
         } catch (NumberFormatException nfe) {
-            creditHours = -1;
+            logger.error(nfe.getMessage());
+            logger.debug("A non-integer was entered for the Credit Hours field!");
+            creditHours = -1; //set to -1 so that isCourseValid method will return false and Course will not be added to database
         }
 
         System.out.print("\tOpen for Registration (true/false)\n\t> ");
