@@ -11,6 +11,9 @@ import com.revature.p0.screens.studentscreens.*;
 import com.revature.p0.services.CourseService;
 import com.revature.p0.services.StudentCourseService;
 import com.revature.p0.services.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -18,6 +21,7 @@ public class AppState {
 
     private static boolean appRunning;
     private final ScreenRouter router;
+    private final Logger logger = LogManager.getLogger(StudentCancelRegisteredClassScreen.class);
 
     public AppState() {
         this.appRunning = true;
@@ -55,7 +59,8 @@ public class AppState {
             try{
                 router.getCurrentScreen().render();
             } catch (Exception e) {
-                e.printStackTrace(); //#TODO
+                logger.error(e.getMessage());
+                logger.debug("An unexpected error occured while rendering a screen!");
             }
         }
     }

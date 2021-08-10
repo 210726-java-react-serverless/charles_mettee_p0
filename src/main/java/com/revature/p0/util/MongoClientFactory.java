@@ -5,7 +5,10 @@ import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import com.revature.p0.screens.studentscreens.StudentCancelRegisteredClassScreen;
 import com.revature.p0.util.exceptions.DataSourceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,6 +20,7 @@ public class MongoClientFactory {
 
     private final MongoClient mongoClient;
     private static final MongoClientFactory mongoClientFactory = new MongoClientFactory();
+    private final Logger logger = LogManager.getLogger(StudentCancelRegisteredClassScreen.class);
 
     private MongoClientFactory() {
 
@@ -41,10 +45,12 @@ public class MongoClientFactory {
             this.mongoClient = MongoClients.create(settings);
 
         } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace(); // TODO log this to a file
+            logger.error(fnfe.getMessage());
+            logger.debug("Unable to load database properties file");
             throw new DataSourceException("Unable to load database properties file.", fnfe);
         } catch(Exception e){
-            e.printStackTrace(); // TODO log this to a file
+            logger.error(e.getMessage());
+            logger.debug("An unexpected exception occurred");
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
