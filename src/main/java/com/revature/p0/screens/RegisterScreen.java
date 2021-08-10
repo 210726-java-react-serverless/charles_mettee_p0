@@ -37,10 +37,10 @@ public class RegisterScreen extends Screen {
         System.out.print("\tEmail\n\t> ");
         String email = consoleReader.readLine();
 
-        System.out.print("\tUsername\n\t> ");
+        System.out.print("\tUsername (must be at least 5 characters)\n\t> ");
         String username = consoleReader.readLine();
 
-        System.out.print("\tPassword\n\t> ");
+        System.out.print("\tPassword (must be at least 5 characters)\n\t> ");
         String password = consoleReader.readLine();
 
         User newUser = null;
@@ -50,12 +50,12 @@ public class RegisterScreen extends Screen {
 
         try {
             userService.register(newUser);
+            System.out.println("\tRegistration successful. Returning to Welcome Screen...");
             logger.info("User successfully registered!");
-            router.navigate("/welcome");
         } catch (Exception e) {
+            System.out.println("\tInvalid input provided. Returning to Welcome Screen...");
             logger.error(e.getMessage());
             logger.debug("User not registered!");
-            router.navigate("/welcome");
         }
         router.navigate("/Welcome"); //return to the welcome screen upon registration completion.
     }
