@@ -1,13 +1,9 @@
 package com.revature.p0.screens.facultyscreens;
 
 import com.revature.p0.models.Course;
-import com.revature.p0.models.Student;
-import com.revature.p0.repositories.CourseRepository;
-import com.revature.p0.repositories.StudentCourseRepository;
 import com.revature.p0.screens.Screen;
 import com.revature.p0.services.CourseService;
 import com.revature.p0.services.StudentCourseService;
-import com.revature.p0.services.UserService;
 import com.revature.p0.util.ScreenRouter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,9 +26,7 @@ public class FacultyRemoveClassScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-        //#TODO implement rendering for FacultyRemoveClassScreen
         System.out.println("\n\tWelcome to the Remove Class Screen.\n");
-
 
         List<Course> allCourses = courseService.getAllCourses();
 
@@ -44,14 +38,31 @@ public class FacultyRemoveClassScreen extends Screen {
         String subjectCode = (consoleReader.readLine());
         String[] subjectCodeArr = subjectCode.split(" ", 2);
 
+        if(subjectCodeArr.length != 2){
+            logger.info("User has not entered two arguments (Course Subject and Course Code).");
+            subjectCodeArr = new String[2];
+            subjectCodeArr[0] = "";
+            subjectCodeArr[1] = "";
+        }
+
         Course courseToDelete = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
-        //Remove all in StudentCourseRepository
-        studentCourseService.removeAllFromCourse(courseToDelete.getId());
-        //Remove course from CourseRepository
-        courseService.deleteCourse(courseToDelete);
+        try {
+            //Remove all in StudentCourseRepository
+            studentCourseService.removeAllFromCourse(courseToDelete.getId());
+            //Remove course from CourseRepository
+            courseService.deleteCourse(courseToDelete);
+            System.out.println("\t" + courseToDelete.getCourseTitle() + " has successfully been removed from the course catalog.");
+            logger.info("Course successfully removed from the database!");
+            logger.info("All students have been unregistered from the deleted course!");
 
-        System.out.println("\t" + courseToDelete.getCourseTitle() + " has successfully been removed from the course catalog.");
+        } catch (NullPointerException npe) {
+            System.out.println("\tInvalid Input. No courses have been removed from the catalog.");
+            logger.error(npe.getMessage());
+            logger.debug("A Subject/Code combination matching input does not exist! No course was removed from the catalog!");
+        }
+
+
 
         System.out.print("\n\t(1) Return to Faculty Dashboard" +
                 "\n\t(2) Remove another Course" +
