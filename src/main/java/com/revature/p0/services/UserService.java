@@ -2,13 +2,14 @@ package com.revature.p0.services;
 
 import com.revature.p0.models.User;
 import com.revature.p0.repositories.UserRepository;
-import com.revature.p0.screens.RegisterScreen;
 import com.revature.p0.util.UserSession;
 import com.revature.p0.util.exceptions.AuthenticationException;
 import com.revature.p0.util.exceptions.InvalidRequestException;
 import com.revature.p0.util.exceptions.ResourcePersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.sql.SQLOutput;
 
 public class UserService {
 
@@ -93,7 +94,7 @@ public class UserService {
             logger.debug("User provided a blank password.");
             return false;
         }
-        if(user.getPassword().length() > 5){
+        if(user.getPassword().length() < 5){
             logger.debug("User provided a password with fewer than five characters.");
             return false;
         }
