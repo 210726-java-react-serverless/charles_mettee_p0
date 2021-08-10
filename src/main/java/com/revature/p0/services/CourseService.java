@@ -42,8 +42,20 @@ public class CourseService {
     public boolean isCourseValid(Course course) {
         if (course == null) return false;
         if (course.getCourseSubject() == null || course.getCourseSubject().trim().equals("")) return false;
+        if (course.getCourseSubject().length() != 4) return false;
+        if (!(Character.isUpperCase(course.getCourseSubject().charAt(0)) &&
+            Character.isUpperCase(course.getCourseSubject().charAt(1)) &&
+            Character.isUpperCase(course.getCourseSubject().charAt(2)) &&
+            Character.isUpperCase(course.getCourseSubject().charAt(3)))) return false;
         if (course.getCourseCode() == null || course.getCourseCode().trim().equals("")) return false;
+        if (course.getCourseCode().length() != 4) return false;
+        try {
+            Integer.parseInt(course.getCourseCode());
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
         if (course.getCourseTitle() == null || course.getCourseTitle().trim().equals("")) return false;
+        if (course.getCourseTitle().length() < 5) return false;
         if (course.getStudentLimit() <= 0) return false;
         if (course.getCreditHours() <= 0) return false;
         return true;

@@ -33,11 +33,21 @@ public class FacultyAddClassScreen extends Screen {
         System.out.print("\tCourse Title\n\t> ");
         String courseTitle = consoleReader.readLine();
 
-        System.out.print("\tStudent Limit\n\t> ");
-        int studentLimit = Integer.parseInt(consoleReader.readLine());
+        int studentLimit = -1;
+        try {
+            System.out.print("\tStudent Limit\n\t> ");
+            studentLimit = Integer.parseInt(consoleReader.readLine());
+        } catch (NumberFormatException nfe) {
+            studentLimit = -1;
+        }
 
-        System.out.print("\tCredit Hours\n\t> ");
-        int creditHours = Integer.parseInt(consoleReader.readLine());
+        int creditHours = -1;
+        try {
+            System.out.print("\tCredit Hours\n\t> ");
+            creditHours = Integer.parseInt(consoleReader.readLine());
+        } catch (NumberFormatException nfe) {
+            creditHours = -1;
+        }
 
         System.out.print("\tOpen for Registration (true/false)\n\t> ");
         boolean windowOpen = Boolean.parseBoolean(consoleReader.readLine());
@@ -46,9 +56,11 @@ public class FacultyAddClassScreen extends Screen {
 
         try {
             courseService.addCourse(newCourse);
+            System.out.println("\tCourse successfully added to the catalog!");
             logger.info("Course successfully added!");
             router.navigate("/FacultyDashboard");
         } catch (Exception e) {
+            System.out.println("\tInvalid input provided! Course not added to the catalog!");
             logger.error(e.getMessage());
             logger.debug("Course not added!");
             router.navigate("/FacultyDashboard");
