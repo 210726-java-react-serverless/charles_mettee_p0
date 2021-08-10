@@ -165,4 +165,9 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
+
+    public Course getCourseById(String courseId) {
+        CourseRepository cr = new CourseRepository();
+        return cr.findById(courseId);
+    }
 }

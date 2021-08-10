@@ -60,9 +60,9 @@ public class StudentRegisterForClassScreen extends Screen {
             logger.info("Successfully registered for course!");
 
         } catch (Exception e){
-            System.out.println("\tInvalid Input.");
+            System.out.println("\tInvalid Request.");
             logger.error(e.getMessage());
-            logger.debug("A Subject/Code combination matching input does not exist! Student did not register for any course!");
+            logger.debug("Student did not register for any course!");
         }
 
         System.out.print("\n\t(1) Register for Another Course" +
