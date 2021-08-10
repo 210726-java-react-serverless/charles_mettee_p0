@@ -46,10 +46,12 @@ public class UserRepository implements CrudRepository<User> {
             return null;
 
         } catch (JsonMappingException jme) {
-            jme.printStackTrace(); // TODO log this to a file
+            logger.error(jme.getMessage());
+            logger.debug("An exception occurred while mapping the document.");
             throw new DataSourceException("An exception occurred while mapping the document.", jme);
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error(e.getMessage());
+            logger.debug("An unexpected exception occurred.");
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
@@ -80,7 +82,8 @@ public class UserRepository implements CrudRepository<User> {
             return newUser;
 
         } catch (Exception e) {
-           // e.printStackTrace(); // TODO log this to a file
+            logger.error(e.getMessage());
+            logger.debug("An unexpected exception occurred.");
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
@@ -111,10 +114,12 @@ public class UserRepository implements CrudRepository<User> {
             return authUser;
 
         } catch (JsonMappingException jme) {
-            jme.printStackTrace(); // TODO log this to a file
+            logger.error(jme.getMessage());
+            logger.debug("An exception occurred while mapping the document.");
             throw new DataSourceException("An exception occurred while mapping the document.", jme);
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error(e.getMessage());
+            logger.debug("An unexpected exception occurred.");
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
@@ -135,10 +140,12 @@ public class UserRepository implements CrudRepository<User> {
             return authUser;
 
         } catch (JsonMappingException jme) {
-            jme.printStackTrace(); // TODO log this to a file
+            logger.error(jme.getMessage());
+            logger.debug("An exception occurred while mapping the document.");
             throw new DataSourceException("An exception occurred while mapping the document.", jme);
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error(e.getMessage());
+            logger.debug("An unexpected exception occurred.");
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }

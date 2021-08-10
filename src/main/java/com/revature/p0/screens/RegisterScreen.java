@@ -22,7 +22,6 @@ public class RegisterScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-        //#TODO validate registration information
         System.out.println("\nWelcome to the registration screen! Please enter your registration information.\n");
 
         System.out.print("\tStudent or Faculty\n\t> ");

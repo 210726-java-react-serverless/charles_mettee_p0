@@ -31,7 +31,7 @@ public class FacultyViewClassesScreen extends Screen {
             System.out.println("\t\t" + c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
         }
 
-        router.navigate("/FacultyDashboard"); //#TODO options to navigate back to dashboard, or to edit/remove/add Course screens
+        router.navigate("/FacultyDashboard");
         System.out.print("\n\t(1) Return to Faculty Dashboard" +
                 "\n\t(2) Add a Course" +
                 "\n\t(3) Remove a Course" +

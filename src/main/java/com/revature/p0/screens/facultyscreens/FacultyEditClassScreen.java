@@ -22,7 +22,6 @@ public class FacultyEditClassScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-        //#TODO implement rendering for FacultyEditClassScreen
         System.out.println("\n\tWelcome to the Edit Class Screen.\n");
 
         List<Course> allCourses = courseService.getAllCourses();
