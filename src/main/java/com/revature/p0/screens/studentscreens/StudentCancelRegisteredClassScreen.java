@@ -44,20 +44,26 @@ public class StudentCancelRegisteredClassScreen extends Screen {
         String subjectCode = (consoleReader.readLine());
         String[] subjectCodeArr = subjectCode.split(" ", 2);
 
-        try {
-            Course courseToDelete = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
-            studentCourseService.cancelCourse(userService.getSession().getCurrentUser().getId(), courseToDelete.getId());
+        if(subjectCodeArr.length != 2){
+            logger.info("User has not entered two arguments (Course Subject and Course Code).");
+            subjectCodeArr = new String[2];
+            subjectCodeArr[0] = "";
+            subjectCodeArr[1] = "";
+        }
 
+        Course courseToDelete = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
+
+        try {
+            studentCourseService.cancelCourse(userService.getSession().getCurrentUser().getId(), courseToDelete.getId());
             System.out.print("\tYou have successfully unregistered from " +
                     courseToDelete.getCourseSubject() + " " +
                     courseToDelete.getCourseCode() + " : " +
                     courseToDelete.getCourseTitle());
-
             logger.info("Successfully unregistered from course!");
-        } catch (Exception e) {
+        } catch (NullPointerException npe) {
             System.out.println("\tInvalid Input. You have not unregistered from any courses.");
-            logger.error(e.getMessage());
-            logger.debug("Student did not unregister from any course!");
+            logger.error(npe.getMessage());
+            logger.debug("A Subject/Code combination matching input does not exist! Student did not unregister from any course!");
         }
 
         System.out.print("\n\n\t(1) Return to Student Dashboard" +
