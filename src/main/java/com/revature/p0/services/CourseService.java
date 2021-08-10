@@ -12,10 +12,11 @@ import java.util.List;
 public class CourseService {
 
     private final CourseRepository courseRepo;
+    private final Logger logger = LogManager.getLogger(UserService.class);
+
     public CourseService(CourseRepository courseRepo) {
         this.courseRepo = courseRepo;
     }
-    private final Logger logger = LogManager.getLogger(UserService.class);
 
     public boolean deleteCourse(Course courseToDelete){
         return courseRepo.deleteById(courseToDelete.getId());

@@ -247,7 +247,7 @@ public class UserServiceTestSuite {
             sut.register(duplicate);
         } finally {
             // Assert
-            verify(mockUserRepo, times(1)).findUserByUsername(duplicate.getUsername());
+            verify(mockUserRepo, times(1)).findUserByEmail(duplicate.getEmail());
             verify(mockUserRepo, times(0)).save(duplicate);
 
         }
