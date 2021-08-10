@@ -80,4 +80,8 @@ public class CourseService {
     public Course findById(String courseId) {
         return courseRepo.findById(courseId);
     }
+
+    public List<Course> getAvailableCourses() {
+        return courseRepo.getAvailableCourses();
+    }
 }

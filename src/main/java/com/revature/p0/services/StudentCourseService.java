@@ -1,5 +1,6 @@
 package com.revature.p0.services;
 
+import com.revature.p0.models.Course;
 import com.revature.p0.models.StudentCourse;
 import com.revature.p0.models.User;
 import com.revature.p0.repositories.StudentCourseRepository;
@@ -19,7 +20,9 @@ public class StudentCourseService {
     }
 
     public StudentCourse registerCourse(StudentCourse studentCourse){
-        //#TODO Validate input
+        if (studentCourseRepo.findByStudentIdAndCourseId(studentCourse.getStudentId(), studentCourse.getCourseId()) != null){
+            throw new InvalidRequestException("Student is already registered for this course!");
+        }
         return studentCourseRepo.save(studentCourse);
     }
 
@@ -33,9 +36,13 @@ public class StudentCourseService {
         return studentCourseRepo.deleteByCourseId(courseId);
     }
 
-
     public List<StudentCourse> getRegisteredCourses(String id){
         return studentCourseRepo.findByStudentId(id);
+    }
+
+    public StudentCourse findByStudentIdAndCourseId(String studentId, String courseId){
+        StudentCourse sc = studentCourseRepo.findByStudentIdAndCourseId(studentId, courseId);
+        return sc; //#TODO Validation
     }
 
 

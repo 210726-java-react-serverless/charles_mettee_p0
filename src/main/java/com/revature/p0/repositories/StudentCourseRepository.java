@@ -22,7 +22,29 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
     }
 
     public StudentCourse findByStudentIdAndCourseId(String studentId, String courseId){
-        return null; //#TODO
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
+            MongoCollection<Document> studentCourseCollection = projectDb.getCollection("student_courses");
+            Document queryDoc = new Document("studentId", studentId).append("courseId", courseId);
+            Document authUserDoc = studentCourseCollection.find(queryDoc).first();
+
+            if(authUserDoc == null) return null;
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            StudentCourse sc = mapper.readValue(authUserDoc.toJson(), StudentCourse.class);
+            sc.setId(authUserDoc.get("_id").toString());
+
+            return sc;
+
+        } catch (JsonMappingException jme) {
+            jme.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An exception occurred while mapping the document.", jme);
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
     }
 
     public List<StudentCourse> findByCourseId(String courseId){
