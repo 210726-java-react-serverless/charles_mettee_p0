@@ -57,16 +57,47 @@ public class UserService {
     }
 
     public boolean isUserValid(User user) {
-        if (user == null) return false;
-        if (!(user.getUserType().equals("Student") || user.getUserType().equals("Faculty"))) return false;
-        if (user.getFirstName() == null || user.getFirstName().trim().equals("")) return false;
-        if (user.getLastName() == null || user.getLastName().trim().equals("")) return false;
-        if (user.getEmail() == null || user.getEmail().trim().equals("")) return false;
-        if (!user.getEmail().contains("@")) return false;
-        if (user.getUsername() == null || user.getUsername().trim().equals("")) return false;
-        if (user.getUsername().length() < 5) return false;
-        if (user.getPassword() == null || user.getPassword().trim().equals("")) return false;
-        return user.getPassword().length() > 5;
+        if (user == null) {
+            logger.debug("User is null!");
+            return false;
+        }
+        if (!(user.getUserType().equals("Student") || user.getUserType().equals("Faculty"))){
+            logger.debug("User attempted to give type other than 'Student' or 'Faculty'!");
+            return false;
+        }
+        if (user.getFirstName() == null || user.getFirstName().trim().equals("")){
+            logger.debug("User provided an empty first name value.");
+            return false;
+        }
+        if (user.getLastName() == null || user.getLastName().trim().equals("")){
+            logger.debug("User provided an empty last name value.");
+            return false;
+        }
+        if (user.getEmail() == null || user.getEmail().trim().equals("")){
+            logger.debug("User provided an empty email value.");
+            return false;
+        }
+        if (!user.getEmail().contains("@")){
+            logger.debug("User provided an email without an '@' character.");
+            return false;
+        }
+        if (user.getUsername() == null || user.getUsername().trim().equals("")){
+            logger.debug("User provided an empty username value.");
+            return false;
+        }
+        if (user.getUsername().length() < 5){
+            logger.debug("User provided an username with fewer than five characters.");
+            return false;
+        }
+        if (user.getPassword() == null || user.getPassword().trim().equals("")){
+            logger.debug("User provided a blank password.");
+            return false;
+        }
+        if(user.getPassword().length() > 5){
+            logger.debug("User provided a password with fewer than five characters.");
+            return false;
+        }
+        return true;
     }
 
 }
