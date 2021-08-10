@@ -81,6 +81,8 @@ public class FacultyEditClassScreen extends Screen {
                         try {
                             courseService.updateIntField(courseToEdit, "studentLimit", Integer.parseInt(valueSelection));
                         } catch (NumberFormatException nfe){
+                            logger.error(nfe.getMessage());
+                            logger.debug("The user entered a non-number String for the studentLimit field!");
                             courseService.updateIntField(courseToEdit, "studentLimit", -1); //negative values will always return false (i.e., no update)
                         }
                         break;
@@ -90,6 +92,8 @@ public class FacultyEditClassScreen extends Screen {
                         try {
                             courseService.updateIntField(courseToEdit, "creditHours", Integer.parseInt(valueSelection));
                         } catch (NumberFormatException nfe){
+                            logger.error(nfe.getMessage());
+                            logger.debug("The user entered a non-number String for the creditHours field!");
                             courseService.updateIntField(courseToEdit, "creditHours", -1); //negative values will return false (i.e., no update)
                         }
                         break;

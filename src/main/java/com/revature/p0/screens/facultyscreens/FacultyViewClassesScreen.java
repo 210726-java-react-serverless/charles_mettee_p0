@@ -1,7 +1,6 @@
 package com.revature.p0.screens.facultyscreens;
 
 import com.revature.p0.models.Course;
-import com.revature.p0.repositories.CourseRepository;
 import com.revature.p0.screens.Screen;
 import com.revature.p0.services.CourseService;
 import com.revature.p0.services.UserService;
