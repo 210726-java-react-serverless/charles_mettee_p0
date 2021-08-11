@@ -29,12 +29,16 @@ public class StudentRegisterForClassScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-        System.out.println("\n\tHere are all of the courses available for registration: ");
+        System.out.println("\nWelcome to the Register For Course Screen!");
+        System.out.println("\tHere are all of the courses available for registration:\n");
 
         List<Course> availableCourses = courseService.getAvailableCourses();
 
         for(Course c : availableCourses){
-            System.out.println("\t" + c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
+            System.out.println("\t\t" + c.getCourseSubject() + " " +
+                    c.getCourseCode() + " : " +
+                    c.getCourseTitle() + "\t\t\t(" +
+                    c.getCreditHours() + " credits)");
         }
 
         System.out.print("\n\tEnter the subject and code of the course you want to register for\n\t> ");
@@ -69,7 +73,7 @@ public class StudentRegisterForClassScreen extends Screen {
                 "\n\t(2) View Available Courses" +
                 "\n\t(3) View Registered Courses" +
                 "\n\t(4) Cancel A Registered Course" +
-                "\n\t(5) Logout\n\t> ");
+                "\n\t(5) Return to Dashboard\n\t> ");
 
         String userSelection = consoleReader.readLine();
         switch (userSelection) {
@@ -86,11 +90,11 @@ public class StudentRegisterForClassScreen extends Screen {
                 router.navigate("/StudentCancelRegisteredClass");
                 break;
             case "5":
-                System.out.println("Logging out...");
-                router.navigate("/Welcome");
+                router.navigate("/StudentDashboard");
                 break;
             default:
-                System.out.print("You provided an invalid value, please try again.\n");
+                System.out.print("You provided an invalid value, returning to Dashboard...\n");
+                router.navigate("/StudentDashboard");
         }
 
     }

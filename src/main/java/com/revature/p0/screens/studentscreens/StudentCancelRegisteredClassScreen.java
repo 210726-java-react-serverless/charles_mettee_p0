@@ -30,14 +30,17 @@ public class StudentCancelRegisteredClassScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-        System.out.println("Welcome to the Cancel Registered Course Screen.");
-        System.out.println("\tYou are currently registered for the following courses:");
+        System.out.println("\nWelcome to the Cancel Registered Course Screen.");
+        System.out.println("\tYou are currently registered for the following courses:\n");
 
         List<StudentCourse> registeredCourses = studentCourseService.getRegisteredCourses(userService.getSession().getCurrentUser().getId());
 
         for(StudentCourse sc : registeredCourses){
             Course c = courseService.findById(sc.getCourseId());
-            System.out.println("\t\t" + c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
+            System.out.println("\t\t" + c.getCourseSubject() + " " +
+                    c.getCourseCode() + " : " +
+                    c.getCourseTitle() + "\t\t\t(" +
+                    c.getCreditHours() + " credits)");
         }
 
         System.out.print("\n\tEnter the Subject and Code of the course you want to cancel\n\t> ");
@@ -67,11 +70,10 @@ public class StudentCancelRegisteredClassScreen extends Screen {
         }
 
         System.out.print("\n\n\t(1) Return to Student Dashboard" +
-                "\n\t(2) Cancel a course" +
+                "\n\t(2) Cancel a Course" +
                 "\n\t(3) Register for Course" +
                 "\n\t(4) View Available Courses" +
-                "\n\t(5) View My Registered Courses" +
-                "\n\t(6) Logout\n\t> ");
+                "\n\t(5) View My Registered Courses\n\t> ");
 
         String userSelection = consoleReader.readLine();
         switch (userSelection) {
@@ -90,12 +92,9 @@ public class StudentCancelRegisteredClassScreen extends Screen {
             case "5":
                 router.navigate("/StudentViewRegisteredClasses");
                 break;
-            case "6":
-                System.out.println("Logging out...");
-                router.navigate("/Welcome");
-                break;
             default:
-                System.out.print("You provided an invalid value, please try again.\n");
+                System.out.print("You provided an invalid value, returning to Dashboard...\n");
+                router.navigate("/StudentDashboard");
         }
 
     }

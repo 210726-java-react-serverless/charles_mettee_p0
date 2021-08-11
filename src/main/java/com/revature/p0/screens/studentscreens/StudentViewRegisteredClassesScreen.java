@@ -27,13 +27,13 @@ public class StudentViewRegisteredClassesScreen extends Screen {
     @Override
     public void render() throws Exception {
         System.out.println("\nWelcome to the View Registered Classes screen.");
-        System.out.println("\tYou are currently registered for the following courses:");
+        System.out.println("\tYou are currently registered for the following courses:\n");
 
         List<StudentCourse> registeredCourses = studentCourseService.getRegisteredCourses(userService.getSession().getCurrentUser().getId());
 
         for(StudentCourse sc : registeredCourses){
             Course c = courseService.findById(sc.getCourseId());
-            System.out.println("\n\t\t" +c.getCourseSubject() + " " +
+            System.out.println("\t\t" +c.getCourseSubject() + " " +
                     c.getCourseCode() + " : " +
                     c.getCourseTitle() + "\t\t\t(" +
                     c.getCreditHours() + " credits)");
@@ -59,7 +59,8 @@ public class StudentViewRegisteredClassesScreen extends Screen {
                 router.navigate("/StudentCancelRegisteredClass");
                 break;
             default:
-                System.out.print("You provided an invalid value, please try again.\n");
+                System.out.print("You provided an invalid value, returning to Dashboard...\n");
+                router.navigate("/StudentDashboard");
         }
 
     }

@@ -51,7 +51,8 @@ public class StudentViewAvailableClassesScreen extends Screen {
                 router.navigate("/StudentCancelRegisteredClass");
                 break;
             default:
-                System.out.print("You provided an invalid value, please try again.\n");
+                System.out.print("You provided an invalid value, returning to Dashboard...\n");
+                router.navigate("/StudentDashboard");
         }
 
     }
