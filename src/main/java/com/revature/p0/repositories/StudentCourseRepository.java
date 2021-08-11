@@ -155,13 +155,13 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
                     .append("courseId", courseId);
 
             studentCoursesCollection.deleteOne(deletionDoc);
-
-            return true;
         } catch (Exception e) {
             logger.error(e.getMessage());
             logger.debug("An unexpected exception occurred.");
-            throw new DataSourceException("An unexpected exception occurred.", e);
+            return false;
+            // throw new DataSourceException("An unexpected exception occurred.", e);
         }
+        return true;
     }
 
     public boolean deleteByCourseId(String courseId){
@@ -176,7 +176,8 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
         } catch (Exception e) {
             logger.error(e.getMessage());
             logger.debug("An unexpected exception occurred.");
-            throw new DataSourceException("An unexpected exception occurred.", e);
+            return false;
+            //throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
 

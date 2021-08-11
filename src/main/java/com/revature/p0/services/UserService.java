@@ -9,8 +9,6 @@ import com.revature.p0.util.exceptions.ResourcePersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.SQLOutput;
-
 public class UserService {
 
     private final Logger logger = LogManager.getLogger(UserService.class);

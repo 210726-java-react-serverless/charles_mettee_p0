@@ -5,6 +5,7 @@ import com.revature.p0.models.StudentCourse;
 import com.revature.p0.repositories.StudentCourseRepository;
 import com.revature.p0.screens.studentscreens.StudentCancelRegisteredClassScreen;
 import com.revature.p0.util.exceptions.InvalidRequestException;
+import com.revature.p0.util.exceptions.ResourcePersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +22,7 @@ public class StudentCourseService {
 
     public StudentCourse registerCourse(StudentCourse studentCourse){
         if (studentCourseRepo.findByStudentIdAndCourseId(studentCourse.getStudentId(), studentCourse.getCourseId()) != null){
-            throw new InvalidRequestException("Student is already registered for this course!");
+            throw new ResourcePersistenceException("Student is already registered for this course!");
         }
 
         Course c = studentCourseRepo.getCourseById(studentCourse.getCourseId());
@@ -30,6 +31,7 @@ public class StudentCourseService {
             return studentCourseRepo.save(studentCourse);
         } else {
             throw new InvalidRequestException("This course is currently unavailable for registration!");
+            //#TODO, add logging here
         }
     }
 

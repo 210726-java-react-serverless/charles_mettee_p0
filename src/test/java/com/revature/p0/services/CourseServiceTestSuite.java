@@ -1,12 +1,7 @@
 package com.revature.p0.services;
 
 import com.revature.p0.models.Course;
-import com.revature.p0.models.FacultyMember;
-import com.revature.p0.models.Student;
-import com.revature.p0.models.User;
 import com.revature.p0.repositories.CourseRepository;
-import com.revature.p0.repositories.UserRepository;
-import com.revature.p0.util.UserSession;
 import com.revature.p0.util.exceptions.InvalidRequestException;
 import com.revature.p0.util.exceptions.ResourcePersistenceException;
 import org.junit.After;
@@ -23,12 +18,12 @@ import static org.mockito.Mockito.*;
 public class CourseServiceTestSuite {
 
     CourseService sut;
-    private CourseRepository mockUserRepo;
+    private CourseRepository mockCourseRepo;
 
     @Before
     public void beforeEachTest() {
-        mockUserRepo = Mockito.mock(CourseRepository.class);
-        sut = new CourseService(mockUserRepo);
+        mockCourseRepo = Mockito.mock(CourseRepository.class);
+        sut = new CourseService(mockCourseRepo);
     }
 
     @After
@@ -217,14 +212,14 @@ public class CourseServiceTestSuite {
         // Arrange
         Course expectedResult = new Course("MATH", "2000", "Example Course", 24, 4, true);
         Course validCourse = new Course("MATH", "2000", "Example Course", 24, 4, true);
-        when(mockUserRepo.save(any())).thenReturn(expectedResult);
+        when(mockCourseRepo.save(any())).thenReturn(expectedResult);
 
         // Act
         Course actualResult = sut.addCourse(validCourse);
 
         // Assert
         Assert.assertEquals(expectedResult, actualResult);
-        verify(mockUserRepo, times(1)).save(any());
+        verify(mockCourseRepo, times(1)).save(any());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -237,7 +232,7 @@ public class CourseServiceTestSuite {
             sut.addCourse(invalidCourse);
         } finally {
             // Assert
-            verify(mockUserRepo, times(0)).save(any());
+            verify(mockCourseRepo, times(0)).save(any());
         }
     }
 
@@ -246,15 +241,15 @@ public class CourseServiceTestSuite {
         // Arrange
         Course existingUser = new Course("MATH", "2000", "Example Course", 24, 4, true);
         Course duplicate = new Course("CALC", "3000", "Example Course", 24, 4, true);
-        when(mockUserRepo.findCourseByTitle(duplicate.getCourseTitle())).thenReturn(existingUser);
+        when(mockCourseRepo.findCourseByTitle(duplicate.getCourseTitle())).thenReturn(existingUser);
 
         // Act
         try {
             sut.addCourse(duplicate);
         } finally {
             // Assert
-            verify(mockUserRepo, times(1)).findCourseByTitle(duplicate.getCourseTitle());
-            verify(mockUserRepo, times(0)).save(duplicate);
+            verify(mockCourseRepo, times(1)).findCourseByTitle(duplicate.getCourseTitle());
+            verify(mockCourseRepo, times(0)).save(duplicate);
 
         }
     }
@@ -264,15 +259,15 @@ public class CourseServiceTestSuite {
         // Arrange
         Course existingUser = new Course("MATH", "2000", "Example Course", 24, 4, true);
         Course duplicate = new Course("MATH", "2000", "Another Course", 24, 4, true);
-        when(mockUserRepo.findCourseBySubjectAndCode(duplicate.getCourseSubject(), duplicate.getCourseCode())).thenReturn(existingUser);
+        when(mockCourseRepo.findCourseBySubjectAndCode(duplicate.getCourseSubject(), duplicate.getCourseCode())).thenReturn(existingUser);
 
         // Act
         try {
             sut.addCourse(duplicate);
         } finally {
             // Assert
-            verify(mockUserRepo, times(1)).findCourseBySubjectAndCode(duplicate.getCourseSubject(), duplicate.getCourseCode());
-            verify(mockUserRepo, times(0)).save(duplicate);
+            verify(mockCourseRepo, times(1)).findCourseBySubjectAndCode(duplicate.getCourseSubject(), duplicate.getCourseCode());
+            verify(mockCourseRepo, times(0)).save(duplicate);
         }
     }
 
@@ -374,6 +369,9 @@ public class CourseServiceTestSuite {
 
         Assert.assertTrue(validUpdate1);
         Assert.assertTrue(validUpdate2);
+
+        verify(mockCourseRepo, times(1)).updateIntField(original, "studentLimit", 23);
+        verify(mockCourseRepo, times(1)).updateIntField(original, "creditHours", 5);
     }
 
     @Test
@@ -385,6 +383,9 @@ public class CourseServiceTestSuite {
 
         Assert.assertFalse(validUpdate1);
         Assert.assertFalse(validUpdate2);
+
+        verify(mockCourseRepo, times(0)).updateIntField(original, "studentLimit", -1);
+        verify(mockCourseRepo, times(0)).updateIntField(original, "creditHours", -1);
     }
 
     @Test
@@ -398,6 +399,11 @@ public class CourseServiceTestSuite {
         Assert.assertTrue(validUpdate1);
         Assert.assertTrue(validUpdate2);
         Assert.assertTrue(validUpdate3);
+
+        verify(mockCourseRepo, times(1)).updateStringField(original, "courseSubject", "CALC");
+        verify(mockCourseRepo, times(1)).updateStringField(original, "courseCode", "2000");
+        verify(mockCourseRepo, times(1)).updateStringField(original, "courseTitle", "Calculus I");
+
     }
 
     @Test
@@ -411,6 +417,11 @@ public class CourseServiceTestSuite {
         Assert.assertFalse(validUpdate1);
         Assert.assertFalse(validUpdate2);
         Assert.assertFalse(validUpdate3);
+
+        verify(mockCourseRepo, times(0)).updateStringField(original, "courseSubject", "    ");
+        verify(mockCourseRepo, times(0)).updateStringField(original, "courseCode", "    ");
+        verify(mockCourseRepo, times(0)).updateStringField(original, "courseTitle", "    ");
+
     }
 
     @Test
@@ -422,5 +433,38 @@ public class CourseServiceTestSuite {
 
         Assert.assertTrue(validUpdate1);
         Assert.assertTrue(validUpdate2);
+
+        verify(mockCourseRepo, times(0)).updateBooleanField(original, "courseSubject", true);
+        verify(mockCourseRepo, times(0)).updateBooleanField(original, "courseCode", false);
+
     }
+
+    @Test
+    public void findById_returnsSuccessfully_GivenValidId(){
+        Course original = new Course("MATH", "3000", "Calculus II", 25, 4, true);
+        sut.addCourse(original);
+        Course courseInRepo = sut.findCourseBySubjectAndCode(original.getCourseSubject(), original.getCourseCode());
+
+        Assert.assertEquals(sut.findById(original.getId()), courseInRepo);
+    }
+
+    @Test
+    public void getAvailableCourses_returnsSuccessfully(){
+        List<Course> availableCourseList = sut.getAvailableCourses();
+        Assert.assertNotNull(availableCourseList);
+    }
+
+    @Test
+    public void deleteCourse_deletesSuccessfully_GivenValidCourse(){
+        Course original = new Course("MATH", "3000", "Calculus II", 25, 4, true);
+        sut.addCourse(original);
+
+        sut.deleteCourse(original);
+
+        Course nullCourse = sut.findCourseBySubjectAndCode(original.getCourseSubject(), original.getCourseCode());
+
+        Assert.assertNull(nullCourse);
+    }
+
+
 }

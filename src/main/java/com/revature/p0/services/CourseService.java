@@ -97,8 +97,8 @@ public class CourseService {
         return true;
     }
 
-    public Course findCourseBySubjectAndCode(String studentId, String courseId) {
-        return courseRepo.findCourseBySubjectAndCode(studentId, courseId);
+    public Course findCourseBySubjectAndCode(String courseSubject, String courseCode) {
+        return courseRepo.findCourseBySubjectAndCode(courseSubject, courseCode);
     }
 
     public boolean updateStringField(Course course, String field, String newValue) {
