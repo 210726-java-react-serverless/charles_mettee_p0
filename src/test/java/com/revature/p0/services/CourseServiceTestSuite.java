@@ -15,6 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -274,4 +276,151 @@ public class CourseServiceTestSuite {
         }
     }
 
+    @Test
+    public void getAllCourses_returnsListOfCourses() {
+        List<Course> courseList = sut.getAllCourses();
+        Assert.assertNotNull(courseList);
+    }
+
+    @Test
+    public void isStringUpdateValid_returnsTrue_GivenValidInput(){
+        boolean valid1 = sut.isStringUpdateValid("courseSubject", "CALC");
+        boolean valid2 = sut.isStringUpdateValid("courseCode", "1010");
+        boolean valid3 = sut.isStringUpdateValid("courseTitle", "New Title");
+
+        Assert.assertTrue(valid1);
+        Assert.assertTrue(valid2);
+        Assert.assertTrue(valid3);
+    }
+
+    @Test
+    public void isStringUpdateValid_returnsFalse_GivenEmptyString(){
+        boolean invalid1 = sut.isStringUpdateValid("courseSubject", "    ");
+        boolean invalid2 = sut.isStringUpdateValid("courseCode", "");
+        boolean invalid3 = sut.isStringUpdateValid("courseTitle", null);
+
+        Assert.assertFalse(invalid1);
+        Assert.assertFalse(invalid2);
+        Assert.assertFalse(invalid3);
+    }
+
+    @Test
+    public void isStringUpdateValid_returnsFalse_GivenCourseSubjectLengthNotEqualsFour(){
+        boolean invalid1 = sut.isStringUpdateValid("courseSubject", "MAT");
+        boolean invalid2 = sut.isStringUpdateValid("courseSubject", "CALCULUS");
+
+        Assert.assertFalse(invalid1);
+        Assert.assertFalse(invalid2);
+    }
+
+    @Test
+    public void isStringUpdateValid_returnsFalse_GivenCourseSubjectContainsLowercaseCharacters(){
+        boolean invalid1 = sut.isStringUpdateValid("courseSubject", "mATH");
+        boolean invalid2 = sut.isStringUpdateValid("courseSubject", "MaTH");
+        boolean invalid3 = sut.isStringUpdateValid("courseSubject", "MAtH");
+        boolean invalid4 = sut.isStringUpdateValid("courseSubject", "MATh");
+
+        Assert.assertFalse(invalid1);
+        Assert.assertFalse(invalid2);
+        Assert.assertFalse(invalid3);
+        Assert.assertFalse(invalid4);
+    }
+
+    @Test
+    public void isStringUpdateValid_returnsFalse_GivenCourseCodeLengthNotEqualsFour(){
+        boolean invalid1 = sut.isStringUpdateValid("courseCode", "000");
+        boolean invalid2 = sut.isStringUpdateValid("courseCode", "11111");
+
+        Assert.assertFalse(invalid1);
+        Assert.assertFalse(invalid2);
+    }
+
+    @Test
+    public void isStringUpdateValid_returnsFalse_GivenCourseCodeNotParsableToInteger(){
+        boolean invalid1 = sut.isStringUpdateValid("courseCode", "abcd");
+        Assert.assertFalse(invalid1);
+    }
+
+    @Test
+    public void isStringUpdateValid_returnsFalse_GivenCourseTitleLengthLessThanFive(){
+        boolean invalid1 = sut.isStringUpdateValid("courseTitle", "Test");
+        Assert.assertFalse(invalid1);
+    }
+
+    @Test
+    public void isIntUpdateValid_returnsTrue_GivenValidInput(){
+        boolean valid1 = sut.isIntUpdateValid(100);
+        boolean valid2 = sut.isIntUpdateValid(1);
+
+        Assert.assertTrue(valid1);
+        Assert.assertTrue(valid2);
+    }
+
+    @Test
+    public void isIntUpdateValid_returnsFalse_GivenNonPositiveInput(){
+        boolean invalid1 = sut.isIntUpdateValid(0);
+        boolean invalid2 = sut.isIntUpdateValid(-1);
+
+        Assert.assertFalse(invalid1);
+        Assert.assertFalse(invalid2);
+    }
+
+    @Test
+    public void updateIntField_returnsTrue_GivenValidInput(){
+        Course original = new Course("MATH", "3000", "Calculus II", 25, 4, true);
+
+        boolean validUpdate1 = sut.updateIntField(original, "studentLimit", 23);
+        boolean validUpdate2 = sut.updateIntField(original, "creditHours", 5);
+
+        Assert.assertTrue(validUpdate1);
+        Assert.assertTrue(validUpdate2);
+    }
+
+    @Test
+    public void updateIntField_returnsFalse_GivenInvalidInput(){
+        Course original = new Course("MATH", "3000", "Calculus II", 25, 4, true);
+
+        boolean validUpdate1 = sut.updateIntField(original, "studentLimit", -1);
+        boolean validUpdate2 = sut.updateIntField(original, "creditHours", -1);
+
+        Assert.assertFalse(validUpdate1);
+        Assert.assertFalse(validUpdate2);
+    }
+
+    @Test
+    public void updateStringField_returnsTrue_GivenValidInput(){
+        Course original = new Course("MATH", "3000", "Calculus II", 25, 4, true);
+
+        boolean validUpdate1 = sut.updateStringField(original, "courseSubject", "CALC");
+        boolean validUpdate2 = sut.updateStringField(original, "courseCode", "2000");
+        boolean validUpdate3 = sut.updateStringField(original, "courseTitle", "Calculus I");
+
+        Assert.assertTrue(validUpdate1);
+        Assert.assertTrue(validUpdate2);
+        Assert.assertTrue(validUpdate3);
+    }
+
+    @Test
+    public void updateStringField_returnsFalse_GivenInvalidInput(){
+        Course original = new Course("MATH", "3000", "Calculus II", 25, 4, true);
+
+        boolean validUpdate1 = sut.updateStringField(original, "courseSubject", "    ");
+        boolean validUpdate2 = sut.updateStringField(original, "courseCode", "    ");
+        boolean validUpdate3 = sut.updateStringField(original, "courseTitle", "     ");
+
+        Assert.assertFalse(validUpdate1);
+        Assert.assertFalse(validUpdate2);
+        Assert.assertFalse(validUpdate3);
+    }
+
+    @Test
+    public void updateBooleanField_returnsTrue_GivenValidInput(){
+        Course original = new Course("MATH", "3000", "Calculus II", 25, 4, true);
+
+        boolean validUpdate1 = sut.updateBooleanField(original, "windowOpen", true);
+        boolean validUpdate2 = sut.updateBooleanField(original, "windowOpen", false);
+
+        Assert.assertTrue(validUpdate1);
+        Assert.assertTrue(validUpdate2);
+    }
 }

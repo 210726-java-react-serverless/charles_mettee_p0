@@ -189,7 +189,7 @@ public class CourseRepository implements CrudRepository<Course> {
         } catch (Exception e){
             logger.error(e.getMessage());
             logger.debug("An unexpected exception occurred.");
-            throw new DataSourceException("An unexpected exception occurred.", e);
+            return false;
         }
     }
 
@@ -206,7 +206,7 @@ public class CourseRepository implements CrudRepository<Course> {
         } catch (Exception e){
             logger.error(e.getMessage());
             logger.debug("An unexpected exception occurred.");
-            throw new DataSourceException("An unexpected exception occurred.", e);
+            return false;
         }
     }
 

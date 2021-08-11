@@ -103,14 +103,15 @@ public class CourseService {
 
     public boolean updateStringField(Course course, String field, String newValue) {
         if(isStringUpdateValid(field, newValue)) {
-            return courseRepo.updateStringField(course, field, newValue);
+            courseRepo.updateStringField(course, field, newValue);
+            return true;
         } else {
             return false;
         }
     }
 
     public boolean isStringUpdateValid(String field, String newValue){
-        if (newValue.trim().equals("")){
+        if (newValue == null || newValue.trim().equals("")){
             logger.debug("The user attempted to enter an empty value.");
             return false;
         }
@@ -153,7 +154,8 @@ public class CourseService {
     public boolean updateIntField(Course course, String field, int newValue) {
         if(isIntUpdateValid(newValue)) {
             logger.info("The value of " + field + " was updated successfully!");
-            return courseRepo.updateIntField(course, field, newValue);
+            courseRepo.updateIntField(course, field, newValue);
+            return true;
         } else {
             return false;
         }
@@ -168,7 +170,8 @@ public class CourseService {
     }
 
     public boolean updateBooleanField(Course course, String windowOpen, boolean newValue) {
-        return courseRepo.updateBooleanField(course, windowOpen, newValue);
+        courseRepo.updateBooleanField(course, windowOpen, newValue);
+        return true;
     }
 
     public Course findById(String courseId) {
