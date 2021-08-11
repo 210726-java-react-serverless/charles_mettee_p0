@@ -170,9 +170,10 @@ public class CourseRepository implements CrudRepository<Course> {
             courseCollection.updateOne(queryDoc, setDoc);
             return true;
         } catch (Exception e){
+            System.out.println("\t\tA course with provided criteria already exists in the database");
             logger.error(e.getMessage());
             logger.debug("An unexpected exception occurred.");
-            throw new DataSourceException("An unexpected exception occurred.", e);
+            return false;
         }
     }
 

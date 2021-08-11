@@ -31,14 +31,19 @@ public class FacultyRemoveClassScreen extends Screen {
         List<Course> allCourses = courseService.getAllCourses();
 
         for(Course c : allCourses){
-            System.out.println("\t" + c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
+            System.out.println("\t\t" + c.getCourseSubject() + " " +
+                                c.getCourseCode() + " : " +
+                                c.getCourseTitle() + "\t\t\t\tCredit Hours: "+
+                                c.getCreditHours() + "\t\tStudent limit: " +
+                                c.getStudentLimit() + "\t\tAvailable: " +
+                                c.isWindowOpen());
         }
 
         System.out.print("\n\tEnter the subject and code of the course you want to remove.\n\t> ");
         String subjectCode = (consoleReader.readLine());
         String[] subjectCodeArr = subjectCode.split(" ", 2);
 
-        if(subjectCodeArr.length != 2){
+        if(subjectCodeArr.length != 2 || subjectCodeArr == null){
             logger.info("User has not entered two arguments (Course Subject and Course Code).");
             subjectCodeArr = new String[2];
             subjectCodeArr[0] = "";

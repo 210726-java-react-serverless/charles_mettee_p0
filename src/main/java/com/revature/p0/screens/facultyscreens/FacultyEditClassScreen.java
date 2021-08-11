@@ -27,7 +27,12 @@ public class FacultyEditClassScreen extends Screen {
         List<Course> allCourses = courseService.getAllCourses();
 
         for(Course c : allCourses){
-            System.out.println("\t" + c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
+            System.out.println("\t\t" + c.getCourseSubject() + " " +
+                            c.getCourseCode() + " : " +
+                            c.getCourseTitle() + "\t\t\t\tCredit Hours: "+
+                            c.getCreditHours() + "\t\tStudent limit: " +
+                            c.getStudentLimit() + "\t\tAvailable: " +
+                            c.isWindowOpen());
 
         }
 

@@ -24,7 +24,8 @@ public class FacultyDashboardScreen extends Screen {
         System.out.print("\n\t(1) View All Courses" +
                         "\n\t(2) Add Course" +
                         "\n\t(3) Edit Course" +
-                        "\n\t(4) Remove Course\n\t> ");
+                        "\n\t(4) Remove Course" +
+                        "\n\t(5) Logout\n\t> ");
 
         String userSelection = consoleReader.readLine();
         switch (userSelection) {
@@ -39,6 +40,10 @@ public class FacultyDashboardScreen extends Screen {
                 break;
             case "4":
                 router.navigate("/FacultyRemoveClass");
+                break;
+            case "5":
+                System.out.println("Logging out...");
+                router.navigate("/Welcome");
                 break;
             default:
                 System.out.print("\tYou provided an invalid value.\n");
