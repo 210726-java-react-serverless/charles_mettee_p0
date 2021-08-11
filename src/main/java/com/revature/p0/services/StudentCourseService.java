@@ -35,7 +35,8 @@ public class StudentCourseService {
     }
 
     public boolean cancelCourse(String studentId, String courseId){
-        return studentCourseRepo.deleteByStudentIdAndCourseId(studentId, courseId);
+        studentCourseRepo.deleteByStudentIdAndCourseId(studentId, courseId);
+        return true;
     }
 
     public boolean removeAllFromCourse(String courseId){
