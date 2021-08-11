@@ -31,7 +31,6 @@ public class StudentCourseService {
             return studentCourseRepo.save(studentCourse);
         } else {
             throw new InvalidRequestException("This course is currently unavailable for registration!");
-            //#TODO, add logging here
         }
     }
 

@@ -33,14 +33,16 @@ public class StudentViewRegisteredClassesScreen extends Screen {
 
         for(StudentCourse sc : registeredCourses){
             Course c = courseService.findById(sc.getCourseId());
-            System.out.println("\t\t" +c.getCourseSubject() + " " + c.getCourseCode() + " : " + c.getCourseTitle());
+            System.out.println("\n\t\t" +c.getCourseSubject() + " " +
+                    c.getCourseCode() + " : " +
+                    c.getCourseTitle() + "\t\t\t(" +
+                    c.getCreditHours() + " credits)");
         }
 
         System.out.print("\n\t(1) Return to Student Dashboard" +
                 "\n\t(2) View available courses" +
                 "\n\t(3) Register for a Course" +
-                "\n\t(4) Cancel Registered Course" +
-                "\n\t(5) Logout\n\t> ");
+                "\n\t(4) Cancel Registered Course\n\t> ");
 
         String userSelection = consoleReader.readLine();
         switch (userSelection) {
@@ -55,10 +57,6 @@ public class StudentViewRegisteredClassesScreen extends Screen {
                 break;
             case "4":
                 router.navigate("/StudentCancelRegisteredClass");
-                break;
-            case "5":
-                System.out.println("Logging out...");
-                router.navigate("/Welcome");
                 break;
             default:
                 System.out.print("You provided an invalid value, please try again.\n");

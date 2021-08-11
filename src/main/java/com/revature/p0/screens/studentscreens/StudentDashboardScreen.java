@@ -18,7 +18,7 @@ public class StudentDashboardScreen extends Screen {
     @Override
     public void render() throws Exception {
 
-        System.out.println("Welcome to the Student Dashboard Screen, "
+        System.out.println("\nWelcome to the Student Dashboard Screen, "
                 + userService.getSession().getCurrentUser().getFirstName() + "!");
 
         System.out.print("\n\t(1) View Available Courses" +
