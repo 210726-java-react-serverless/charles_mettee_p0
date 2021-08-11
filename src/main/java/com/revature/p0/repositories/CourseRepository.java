@@ -17,10 +17,12 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
+//Meant for linkage to the project database / courses collection
 public class CourseRepository implements CrudRepository<Course> {
 
     private final Logger logger = LogManager.getLogger(UserService.class);
 
+    //returns a list of all courses in the courses collection
     public List<Course> getAllCourses(){
         List<Course> courseList = new ArrayList<>();
         try {
@@ -50,6 +52,7 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    //returns a list of all available courses, windowOpen must be set to true for it to be available.
     public List<Course> getAvailableCourses(){
         List<Course> courseList = new ArrayList<>();
         try {
@@ -80,6 +83,7 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    //Returns a course from the courses collection according to its set Id code
     @Override
     public Course findById(String id) {
         try{
@@ -107,6 +111,7 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    //Method to save a course to the courses collection in the database. Returns the Course with a set id.
     @Override
     public Course save(Course newCourse) {
         try {
@@ -132,11 +137,13 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    //Unused method, could probably combine the other three update methods into this update method later
     @Override
     public boolean update(Course updatedResource) {
         return false;
     }
 
+    //Method to delete a course from the database according to its set id value.
     @Override
     public boolean deleteById(String id) {
         try{
@@ -159,12 +166,13 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    //Method to update a String field in the database (i.e., courseCode, courseSubject, courseTitle).
     public boolean updateStringField(Course course, String field, String newValue) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
             MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
             MongoCollection<Document> courseCollection = projectDb.getCollection("courses");
-            Document queryDoc = new Document("courseTitle", course.getCourseTitle());
+            Document queryDoc = new Document("courseTitle", course.getCourseTitle()); // finds specific document by unique title
             Document updateDoc = new Document(field, newValue);
             Document setDoc = new Document("$set", updateDoc);
             courseCollection.updateOne(queryDoc, setDoc);
@@ -177,15 +185,17 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    //Method to update a int field in the database (i.e., creditHours, studentLimit).
     public boolean updateIntField(Course course, String field, int newValue) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
             MongoDatabase projectDb = mongoClient.getDatabase("projectdatabase");
             MongoCollection<Document> courseCollection = projectDb.getCollection("courses");
-            Document queryDoc = new Document("courseTitle", course.getCourseTitle());
-            Document updateDoc = new Document(field, newValue);
-            Document setDoc = new Document("$set", updateDoc);
+            Document queryDoc = new Document("courseTitle", course.getCourseTitle()); //find specific document
+            Document updateDoc = new Document(field, newValue); //UpdateDoc specifies field to update, and the value to update to
+            Document setDoc = new Document("$set", updateDoc); //using the $set filter, and updateDoc
             courseCollection.updateOne(queryDoc, setDoc);
+
             return true;
         } catch (Exception e){
             logger.error(e.getMessage());
@@ -194,6 +204,7 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    //Method to update a availability of course in database (i.e., windowOpen).
     public boolean updateBooleanField(Course course, String field, boolean newValue) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
@@ -211,6 +222,7 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    //returns a course with the specified title (unique in the DB).
     public Course findCourseByTitle(String courseTitle) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
@@ -238,6 +250,7 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    //returns a course with the specified subject and code combo (unique in the DB).
     public Course findCourseBySubjectAndCode(String courseSubject, String courseCode) {
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();

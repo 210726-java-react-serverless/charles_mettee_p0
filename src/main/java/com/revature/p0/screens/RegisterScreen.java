@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 
+//Class for rendering the registration screen
 public class RegisterScreen extends Screen {
 
     private final Logger logger = LogManager.getLogger(RegisterScreen.class);
@@ -20,6 +21,7 @@ public class RegisterScreen extends Screen {
         this.userService = userService;
     }
 
+    //method for rendering screen
     @Override
     public void render() throws Exception {
         System.out.println("\nWelcome to the registration screen! Please enter your registration information.\n");
@@ -47,6 +49,7 @@ public class RegisterScreen extends Screen {
         if(userType.equals("Student")) newUser = new Student(firstName, lastName, email, username, password);
         if(userType.equals("Faculty")) newUser = new FacultyMember(firstName, lastName, email, username, password);
 
+        //try-catch block in case registration fails during the registration check (e.g., invalid input or Username/Email already existing)
         try {
             userService.register(newUser);
             System.out.println("\tRegistration successful. Returning to Welcome Screen...");

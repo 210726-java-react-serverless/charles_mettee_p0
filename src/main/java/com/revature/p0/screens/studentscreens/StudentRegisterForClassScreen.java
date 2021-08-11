@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.util.List;
 
+//Class for rendering the Student Register For Class screen
 public class StudentRegisterForClassScreen extends Screen {
 
     private final UserService userService;
@@ -27,6 +28,7 @@ public class StudentRegisterForClassScreen extends Screen {
         this.studentCourseService = studentCourseService;
     }
 
+    //Method for rendering screen
     @Override
     public void render() throws Exception {
         System.out.println("\nWelcome to the Register For Course Screen!");
@@ -52,8 +54,10 @@ public class StudentRegisterForClassScreen extends Screen {
             subjectCodeArr[1] = "";
         }
 
+        //courseService attempts to find Course with matching subject/code combination. Pointed at by courseToRegister
         Course courseToRegister = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
+        //try-catch in case courseToRegister is null
         try {
             StudentCourse sc = new StudentCourse(userService.getSession().getCurrentUser().getId(), courseToRegister.getId());
             studentCourseService.registerCourse(sc);
@@ -62,7 +66,6 @@ public class StudentRegisterForClassScreen extends Screen {
                             courseToRegister.getCourseCode() + " : " +
                             courseToRegister.getCourseTitle());
             logger.info("Successfully registered for course!");
-
         } catch (Exception e){
             System.out.println("\tInvalid Request.");
             logger.error(e.getMessage());

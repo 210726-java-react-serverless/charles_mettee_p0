@@ -11,6 +11,7 @@ import com.revature.p0.util.ScreenRouter;
 import java.io.BufferedReader;
 import java.util.List;
 
+//class for rendering the view Registerd Classes Screen
 public class StudentViewRegisteredClassesScreen extends Screen {
 
     private final UserService userService;
@@ -24,6 +25,7 @@ public class StudentViewRegisteredClassesScreen extends Screen {
         this.courseService = courseService;
     }
 
+    //Method for rendering screen
     @Override
     public void render() throws Exception {
         System.out.println("\nWelcome to the View Registered Classes screen.");

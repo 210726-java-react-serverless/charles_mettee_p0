@@ -9,6 +9,7 @@ import com.revature.p0.util.exceptions.AuthenticationException;
 
 import java.io.BufferedReader;
 
+//Class for rendering the login Screen
 public class LoginScreen extends Screen{
 
     private final UserService userService;
@@ -18,6 +19,7 @@ public class LoginScreen extends Screen{
         this.userService = userService;
     }
 
+    //Method for rendering screen
     @Override
     public void render() throws Exception {
         System.out.println("\nWelcome to the login screen! Please enter your login information below\n");
@@ -30,6 +32,7 @@ public class LoginScreen extends Screen{
 
         User authUser = userService.login(username, password);
 
+        //if-else statements to check whether the User is a Student or Faculty Member and navigates to the appropriate dashboard
         if(authUser instanceof Student) {
             System.out.println("\tLogin successful...\n");
             router.navigate("/StudentDashboard");

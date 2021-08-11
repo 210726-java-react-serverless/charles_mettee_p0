@@ -4,12 +4,14 @@ import com.revature.p0.util.ScreenRouter;
 import java.io.BufferedReader;
 import static com.revature.p0.util.AppState.shutdown;
 
+//Class for rendering the Welcome (Default) screen.
 public class WelcomeScreen extends Screen {
 
     public WelcomeScreen(BufferedReader consoleReader, ScreenRouter router) {
         super("WelcomeScreen", "/Welcome", consoleReader, router);
     }
 
+    //method for rendering the welcome screen
     @Override
     public void render() throws Exception {
 

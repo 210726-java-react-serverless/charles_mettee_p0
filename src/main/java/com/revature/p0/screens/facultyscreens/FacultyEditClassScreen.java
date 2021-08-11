@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.util.List;
 
+//class for rendering the Faculty Edit Class screen
 public class FacultyEditClassScreen extends Screen {
 
     private final Logger logger = LogManager.getLogger(FacultyAddClassScreen.class);
@@ -20,6 +21,7 @@ public class FacultyEditClassScreen extends Screen {
         this.courseService = courseService;
     }
 
+    //method for rendering the screen
     @Override
     public void render() throws Exception {
         System.out.println("\n\tWelcome to the Edit Class Screen.\n");
@@ -47,8 +49,10 @@ public class FacultyEditClassScreen extends Screen {
             subjectCodeArr[1] = "";
         }
 
+        //a Course object is instantiated using the arguments provided by the user
         Course courseToEdit = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
+        //try-catch block in case the Course object was null
         try {
             System.out.println("\tYou have selected " + courseToEdit.getCourseTitle());
             System.out.println("\tSelect a field that you would like to edit:");
@@ -83,7 +87,7 @@ public class FacultyEditClassScreen extends Screen {
                     case "4":
                         System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getStudentLimit() + ")\n\t\t> ");
                         valueSelection = consoleReader.readLine();
-                        try {
+                        try { //try catch in case the value selected could not be parsed to Integer
                             courseService.updateIntField(courseToEdit, "studentLimit", Integer.parseInt(valueSelection));
                         } catch (NumberFormatException nfe){
                             logger.error(nfe.getMessage());
@@ -94,7 +98,7 @@ public class FacultyEditClassScreen extends Screen {
                     case "5":
                         System.out.print("\t\tEnter a new value (current value: " + courseToEdit.getCreditHours() + ")\n\t\t> ");
                         valueSelection = consoleReader.readLine();
-                        try {
+                        try { //try catch in case the value selected could not be parsed to Integer
                             courseService.updateIntField(courseToEdit, "creditHours", Integer.parseInt(valueSelection));
                         } catch (NumberFormatException nfe){
                             logger.error(nfe.getMessage());
@@ -113,6 +117,7 @@ public class FacultyEditClassScreen extends Screen {
                     default:
                         System.out.print("\t\tYou provided an invalid value, please try again.\n\t\t> ");
                 }
+                //repeat do-while until user selects oen of the appropriate options
             } while (!(fieldSelection.equals("1") || fieldSelection.equals("2") ||
                     fieldSelection.equals("3") || fieldSelection.equals("4") ||
                     fieldSelection.equals("5") || fieldSelection.equals("6") || fieldSelection.equals("7")));

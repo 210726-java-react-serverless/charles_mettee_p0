@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+//Class for managing the state of the application (screen routing, startup and shutdown)
 public class AppState {
 
     private static boolean appRunning;
@@ -36,6 +37,7 @@ public class AppState {
         StudentCourseRepository studentCourseRepo = new StudentCourseRepository();
         StudentCourseService studentCourseService = new StudentCourseService(studentCourseRepo);
 
+        //adds all screens to the screen router
         router.addScreen(new LoginScreen(consoleReader, router, userService));
         router.addScreen(new RegisterScreen(consoleReader, router, userService));
         router.addScreen(new StudentDashboardScreen(consoleReader, router, userService));
@@ -52,9 +54,11 @@ public class AppState {
 
     }
 
+    //method for starting up the application
     public void startUp(){
         router.navigate("/welcome");
 
+        //loops until shutdown
         while(appRunning){
             try{
                 router.getCurrentScreen().render();
@@ -65,6 +69,7 @@ public class AppState {
         }
     }
 
+    //method for shutting down the App
     public static void shutdown() {
         appRunning = false;
         MongoClientFactory.getInstance().cleanUp();

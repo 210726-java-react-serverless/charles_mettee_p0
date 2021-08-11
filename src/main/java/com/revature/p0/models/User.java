@@ -2,10 +2,8 @@ package com.revature.p0.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.time.LocalDateTime;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class User {
+public abstract class User { //Abstract class user meant to be inherited by Students and Faculty Members
 
     private String id;
     private String userType;

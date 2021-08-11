@@ -9,6 +9,7 @@ import com.revature.p0.util.ScreenRouter;
 import java.io.BufferedReader;
 import java.util.List;
 
+//Class for rendering the View Available Classes Screen
 public class StudentViewAvailableClassesScreen extends Screen {
 
     private final UserService userService;
@@ -18,11 +19,12 @@ public class StudentViewAvailableClassesScreen extends Screen {
         this.userService = userService;
     }
 
+    //method for rendering screen
     @Override
     public void render() throws Exception {
         System.out.println("\n\tThis is a list of all available courses:\n");
         CourseRepository cr = new CourseRepository();
-        List<Course> allCourses = cr.getAvailableCourses();
+        List<Course> allCourses = cr.getAvailableCourses(); //searching specifically for available courses
 
         for(Course c : allCourses){
             System.out.println("\t\t" + c.getCourseSubject() + " " +

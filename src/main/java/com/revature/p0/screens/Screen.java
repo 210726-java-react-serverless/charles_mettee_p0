@@ -3,6 +3,7 @@ package com.revature.p0.screens;
 import com.revature.p0.util.ScreenRouter;
 import java.io.BufferedReader;
 
+//Abstract class extended by all other Screens.
 public abstract class Screen {
 
     protected String name;

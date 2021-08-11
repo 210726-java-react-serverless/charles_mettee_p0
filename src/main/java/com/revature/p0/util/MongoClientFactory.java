@@ -26,6 +26,7 @@ public class MongoClientFactory {
 
         Properties appProperties = new Properties();
 
+        //try catch for scanning the application.properties file so as to connect to our MongoDB database on the AWS EC2
         try {
             appProperties.load(new FileReader("src/main/resources/application.properties"));
 
@@ -55,14 +56,17 @@ public class MongoClientFactory {
         }
     }
 
+    //method for closing the mongo client
     public void cleanUp(){
         mongoClient.close();
     }
 
+    //returns an instance of MongoClientFactory
     public static MongoClientFactory getInstance(){
         return mongoClientFactory;
     }
 
+    //method for getting the MongoClient
     public MongoClient getConnection(){
         return mongoClient;
     }

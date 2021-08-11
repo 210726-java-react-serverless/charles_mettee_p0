@@ -3,7 +3,7 @@ package com.revature.p0.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StudentCourse {
+public class StudentCourse { //A class representing a single entry in the Student Course collection
 
     private String id;
     private String courseId;

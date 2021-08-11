@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 
+//Class for rendering the Faculty Add Class Screen.
 public class FacultyAddClassScreen extends Screen {
 
     private final Logger logger = LogManager.getLogger(FacultyAddClassScreen.class);
@@ -19,6 +20,7 @@ public class FacultyAddClassScreen extends Screen {
         this.courseService = courseService;
     }
 
+    //Method which renders the Add Class screen
     @Override
     public void render() throws Exception {
         System.out.println("\nWelcome to the Add Course screen! Please enter the course details below.\n");
@@ -33,6 +35,8 @@ public class FacultyAddClassScreen extends Screen {
         String courseTitle = consoleReader.readLine();
 
         int studentLimit = -1;
+
+        //Try-catch block for handling NumberFormatException in the event that parsing to Integer goes wrong.
         try {
             System.out.print("\tStudent Limit\n\t> ");
             studentLimit = Integer.parseInt(consoleReader.readLine());
@@ -55,18 +59,18 @@ public class FacultyAddClassScreen extends Screen {
         System.out.print("\tOpen for Registration (true/false)\n\t> ");
         boolean windowOpen = Boolean.parseBoolean(consoleReader.readLine());
 
+        //A Course object is created with the input values
         Course newCourse = new Course(courseSubject, courseCode, courseTitle, studentLimit, creditHours, windowOpen);
 
+        //A try-catch block for trying to add the above Course to the database.
         try {
             courseService.addCourse(newCourse);
             System.out.println("\tCourse successfully added to the catalog!");
             logger.info("Course successfully added!");
-            router.navigate("/FacultyDashboard");
         } catch (Exception e) {
             System.out.println("\tInvalid input provided! Course not added to the catalog!");
             logger.error(e.getMessage());
             logger.debug("Course not added!");
-            router.navigate("/FacultyDashboard");
         }
 
         System.out.print("\n\t(1) Return to Faculty Dashboard" +

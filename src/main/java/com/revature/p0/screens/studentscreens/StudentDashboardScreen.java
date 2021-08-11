@@ -6,6 +6,7 @@ import com.revature.p0.util.ScreenRouter;
 
 import java.io.BufferedReader;
 
+//Class for Student Dashboard Screen
 public class StudentDashboardScreen extends Screen {
 
     private final UserService userService;
@@ -15,6 +16,7 @@ public class StudentDashboardScreen extends Screen {
         this.userService = userService;
     }
 
+    //method for rendering Student Dashboard screen
     @Override
     public void render() throws Exception {
 

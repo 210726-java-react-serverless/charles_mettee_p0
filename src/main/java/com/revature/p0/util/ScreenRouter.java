@@ -4,6 +4,7 @@ import com.revature.p0.screens.Screen;
 import java.util.HashSet;
 import java.util.Set;
 
+//Class for the ScreenRouter, controlling navigation between screens
 public class ScreenRouter {
 
     private Screen currentScreen;
@@ -15,6 +16,7 @@ public class ScreenRouter {
         return this;
     }
 
+    //Method to iterate over the Set of screens until the provided route is found.
     public void navigate(String route){
         for(Screen screen : screenSet){
             if(screen.getRoute().equals(route)){

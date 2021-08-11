@@ -11,8 +11,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.util.List;
 
+//class for rendering the Remove Class screen
 public class FacultyRemoveClassScreen extends Screen {
-
 
     private final Logger logger = LogManager.getLogger(FacultyAddClassScreen.class);
     private final CourseService courseService;
@@ -50,8 +50,10 @@ public class FacultyRemoveClassScreen extends Screen {
             subjectCodeArr[1] = "";
         }
 
+        //courseService attempts to find course by provided subject and code, which Course courseToDelete points to
         Course courseToDelete = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
+        //try catch in case courseToDelete is null (i.e., a course matching the Course Subject/Code combo wasn't found)
         try {
             //Remove all in StudentCourseRepository
             studentCourseService.removeAllFromCourse(courseToDelete.getId());

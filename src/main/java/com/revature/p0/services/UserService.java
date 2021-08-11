@@ -9,6 +9,7 @@ import com.revature.p0.util.exceptions.ResourcePersistenceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+//Class that serves as an intermediary/communicator between Users and the UserRepository
 public class UserService {
 
     private final Logger logger = LogManager.getLogger(UserService.class);
@@ -24,6 +25,7 @@ public class UserService {
         return session;
     }
 
+    //method for validating registration information and before sending it through to the UserRepo
     public User register(User newUser) {
         if (!isUserValid(newUser)) throw new InvalidRequestException("Invalid user data provided!");
         if (userRepo.findUserByUsername(newUser.getUsername()) != null) throw new ResourcePersistenceException("Provided username is already taken!");
@@ -31,6 +33,7 @@ public class UserService {
         return userRepo.save(newUser);
     }
 
+    //method for validating login information before checking the UserRepo for matching credentials, returns the authorized user if found
     public User login(String username, String password) {
         try {
             if (username == null || username.trim().equals("") || password == null || password.trim().equals("")) {
@@ -55,6 +58,7 @@ public class UserService {
         return authUser;
     }
 
+    //method for checking whether user input is valid during registration
     public boolean isUserValid(User user) {
         if (user == null) {
             logger.debug("User is null!");

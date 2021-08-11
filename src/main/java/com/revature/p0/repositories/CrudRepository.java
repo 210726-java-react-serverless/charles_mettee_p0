@@ -1,5 +1,6 @@
 package com.revature.p0.repositories;
 
+//interface to be implmented by all other repository classes in the package
 public interface CrudRepository<T> {
 
     T findById(String id);

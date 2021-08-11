@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+//Class that serves as an intermediary/communicator between Courses and CourseRepository
 public class CourseService {
 
     private final CourseRepository courseRepo;
@@ -18,10 +19,12 @@ public class CourseService {
         this.courseRepo = courseRepo;
     }
 
+    //Method for deleting course by sending the course through to the CourseRepo class for removal
     public boolean deleteCourse(Course courseToDelete){
         return courseRepo.deleteById(courseToDelete.getId());
     }
 
+    //method which validates input before sending it to courseRepo
     public Course addCourse(Course newCourse) {
 
         if (!isCourseValid(newCourse)) {
@@ -39,10 +42,12 @@ public class CourseService {
         return courseRepo.save(newCourse);
     }
 
+    //method which returns a list of Courses from the CourseRepository
     public List<Course> getAllCourses(){
         return courseRepo.getAllCourses();
     }
 
+    //method which validates input/ensures that Course isn't null
     public boolean isCourseValid(Course course) {
         if (course == null){
             logger.debug("A null course was passed into the method.");
@@ -97,10 +102,12 @@ public class CourseService {
         return true;
     }
 
+    //method which returns the course (if any) found in the database
     public Course findCourseBySubjectAndCode(String courseSubject, String courseCode) {
         return courseRepo.findCourseBySubjectAndCode(courseSubject, courseCode);
     }
 
+    //method for sending through String fields for update to the CourseRepo
     public boolean updateStringField(Course course, String field, String newValue) {
         if(isStringUpdateValid(field, newValue)) {
             courseRepo.updateStringField(course, field, newValue);
@@ -110,6 +117,7 @@ public class CourseService {
         }
     }
 
+    //method for validating whether the newValue is valid for entry
     public boolean isStringUpdateValid(String field, String newValue){
         if (newValue == null || newValue.trim().equals("")){
             logger.debug("The user attempted to enter an empty value.");
@@ -151,6 +159,7 @@ public class CourseService {
         return true;
     }
 
+    //method for sending through int fields for update to the CourseRepo
     public boolean updateIntField(Course course, String field, int newValue) {
         if(isIntUpdateValid(newValue)) {
             logger.info("The value of " + field + " was updated successfully!");
@@ -161,6 +170,7 @@ public class CourseService {
         }
     }
 
+    //method for validating whether new Int value is valid for entry
     public boolean isIntUpdateValid(int newValue){
         if(newValue <= 0){
             logger.debug("The user attempted to change the field to a nonpositive integer.");
@@ -169,15 +179,18 @@ public class CourseService {
         return true;
     }
 
+    //method for sending through boolean fields for update to the CourseRepo (i.e., windowOpen)
     public boolean updateBooleanField(Course course, String windowOpen, boolean newValue) {
         courseRepo.updateBooleanField(course, windowOpen, newValue);
         return true;
     }
 
+    //method for sending through a courseId string the CourseRepo to get the Course from the DB
     public Course findById(String courseId) {
         return courseRepo.findById(courseId);
     }
 
+    //method for returning a list of Available courses from the CourseRepository
     public List<Course> getAvailableCourses() {
         return courseRepo.getAvailableCourses();
     }

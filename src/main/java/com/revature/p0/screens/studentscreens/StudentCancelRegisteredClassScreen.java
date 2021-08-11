@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.util.List;
 
+//Class for rendering the Cancel Registered Class screen
 public class StudentCancelRegisteredClassScreen extends Screen {
 
     public final UserService userService;
@@ -28,6 +29,7 @@ public class StudentCancelRegisteredClassScreen extends Screen {
         this.courseService = courseService;
     }
 
+    //Method for rendering the screen
     @Override
     public void render() throws Exception {
         System.out.println("\nWelcome to the Cancel Registered Course Screen.");
@@ -54,8 +56,10 @@ public class StudentCancelRegisteredClassScreen extends Screen {
             subjectCodeArr[1] = "";
         }
 
+        //courseService attempts to find a Course matching the subject/code provided. Stored in Course courseToDelete
         Course courseToDelete = courseService.findCourseBySubjectAndCode(subjectCodeArr[0], subjectCodeArr[1]);
 
+        //try-catch block in case courseToDelete wasn't found
         try {
             studentCourseService.cancelCourse(userService.getSession().getCurrentUser().getId(), courseToDelete.getId());
             System.out.print("\tYou have successfully unregistered from " +

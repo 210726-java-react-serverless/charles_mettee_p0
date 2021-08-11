@@ -17,15 +17,18 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
+//Meant for linkage to the project database / student_courses collection. Inherits methods from CrudRepository
 public class StudentCourseRepository implements CrudRepository<StudentCourse>{
 
     private final Logger logger = LogManager.getLogger(UserService.class);
 
+    //Unused method
     @Override
     public StudentCourse findById(String id) {
         return null;
     }
 
+    //Method to find a specific document in the student_courses collection by StudentId and courseId. Returns after mapping.
     public StudentCourse findByStudentIdAndCourseId(String studentId, String courseId){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
@@ -54,6 +57,7 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
         }
     }
 
+    //Method which returns a List of StudentCourses according to the id of the associated course. Never called.
     public List<StudentCourse> findByCourseId(String courseId){
         List<StudentCourse> studentCourseList = new ArrayList<>();
         try {
@@ -84,6 +88,7 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
         }
     }
 
+    //Method which returns a List of StudentCourses according to the Id of the Student.
     public List<StudentCourse> findByStudentId(String studentId){
         List<StudentCourse> studentCourseList = new ArrayList<>();
         try {
@@ -114,7 +119,7 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
         }
     }
 
-
+    //Inserts the provided StudentCourse in the parameter to the student_courses collection. Returns the StudentCourse with an id"
     @Override
     public StudentCourse save(StudentCourse newResource) {
         try {
@@ -136,16 +141,19 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
         }
     }
 
+    //Inherited method from CrudRepository. Never used because StudentCourse only contains fields studentId and courseId.
     @Override
     public boolean update(StudentCourse updatedResource) {
         return false;
     }
 
+    //Inherited method from CrudRepository. Never used.
     @Override
     public boolean deleteById(String id) {
         return false;
     }
 
+    //Method for deleting a specific document in the student_courses collection according to the unique studentId and courseId combination
     public boolean deleteByStudentIdAndCourseId(String studentId, String courseId){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
@@ -164,6 +172,7 @@ public class StudentCourseRepository implements CrudRepository<StudentCourse>{
         return true;
     }
 
+    //Method to delete ALL documents in the student_course collection according to courseId (so students aren't registered for deleted courses)
     public boolean deleteByCourseId(String courseId){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
