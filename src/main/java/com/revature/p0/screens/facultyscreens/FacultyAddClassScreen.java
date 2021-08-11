@@ -73,8 +73,7 @@ public class FacultyAddClassScreen extends Screen {
                 "\n\t(2) Add another Course" +
                 "\n\t(3) View all Courses" +
                 "\n\t(4) Edit a Course" +
-                "\n\t(5) Remove a Course" +
-                "\n\t(6) Logout\n\t> ");
+                "\n\t(5) Remove a Course\n\t> ");
 
         String userSelection = consoleReader.readLine();
         switch (userSelection) {
@@ -98,7 +97,8 @@ public class FacultyAddClassScreen extends Screen {
                 router.navigate("/Welcome");
                 break;
             default:
-                System.out.print("You provided an invalid value, please try again.\n");
+                System.out.print("\tYou provided an invalid value. Returning to Dashboard...\n");
+                router.navigate("/FacultyDashboard");
         }
 
     }
